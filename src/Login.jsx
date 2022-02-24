@@ -21,7 +21,8 @@ export default class Login extends React.Component{
             if(!response.ok){
                 throw new Error();            
             }
-            const result = response.json();
+            return response.json();
+        }).then(result =>{
             //resultがnull,undifinedな場合にエラーとして処理を行う
             if(!result){
                 throw new Error();
@@ -30,6 +31,7 @@ export default class Login extends React.Component{
                 ReactDOM.render(<FunctionSelection ID={this.state.ID} />, document.getElementById("root"));                
             }else{
                 if(!result.message){
+                    console.log(result.message);
                     throw new Error();
                 }
                 this.setState({message:result.message});
@@ -45,7 +47,6 @@ export default class Login extends React.Component{
 
     handleChangeID = (e)=>{
         this.setState({ID:e.target.value});
-        
     }
 
     handleChangePassWord = (e)=>{
@@ -59,9 +60,9 @@ export default class Login extends React.Component{
                 <div className={classes.main}>
                     <form onSubmit={this.handleSubmit}>
                         ID<br/>
-                        <input type="text" className={classes.box1} placeholder="ID" id="ID" pattern="^[0-9a-zA-Z]+$" title="半角英数字のみ入力してください" onChange={this.handleChangeID}></input><br/>
+                        <input type="text" className={classes.box1} placeholder="ID" id="ID" pattern="^[0-9a-zA-Z]+$" title="半角英数字のみ入力してください" value={this.state.ID} onChange={this.handleChangeID}></input><br/>
                         パスワード<br/>
-                        <input type="password" className={classes.box2} placeholder="Password" id="password" pattern="^[0-9a-zA-Z]+$" title="半角英数字のみ入力してください" onChange={this.handleChangePassWord}></input>
+                        <input type="password" className={classes.box2} placeholder="Password" id="password" pattern="^[0-9a-zA-Z]+$" title="半角英数字のみ入力してください"value={this.state.password} onChange={this.handleChangePassWord}></input>
                         <button type="submit" onClick={this.clickLogin}>ログイン</button>
                         <div className={classes.errMessage}>
                             <p>{this.state.message}</p>

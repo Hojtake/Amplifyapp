@@ -4,23 +4,24 @@ import ReactDOM from "react-dom";
 import FunctionSelection  from "./FunctionSelection.jsx";
 import IkiikiFaceDiagnoseAPI from "./IkiikiFaceDiagnoseAPI";
 import classes from "./Diagnosis.module.css";
+import { render } from "@testing-library/react";
+import { renderIntoDocument } from "react-dom/test-utils";
 export default class Diagnosis extends React.Component {
     constructor(props){
         super(props);
         this.clickReturnToFunctionSelection = this.clickReturnToFunctionSelection.bind(this);
         this.clickDiagnose = this.clickDiagnose.bind(this);
         this.clickImageSelect = this.clickImageSelect.bind(this);
-        this.state={resultMessage:null,operationMessage:"・画像選択ボタンを押してください"};
+        this.state={resistDayMessage:null,resultMessage:null,operationMessage:"・画像選択ボタンを押してください",photoimage:""};
     }
     //画像をアップロードしたときに画像表示領域に画像を表示する関数
     clickImageSelect= (e)=>{
+        
         this.setState({resultMessage:null});
         const filelist = e.target.files;
-        const photo = document.getElementById("photo_area");
+        
         if(filelist.length == 0) return;
-        if(photo.firstChild != null){
-            photo.firstChild.remove();
-        }
+        this.setState({photoimage:""});
         const reader = new FileReader();
         const faceImage = new Image();
         const file = filelist[0];
@@ -50,10 +51,10 @@ export default class Diagnosis extends React.Component {
                 }
                 //画像を画像表示領域内に埋め込む
                 const imgdata = <img src={e.target.result} width={imageWidth} height={imageHeight} id="getimg"/>;
-                photo.appendChild(imgdata);
-            }
+                this.setState({photoimage:imgdata})
+            }.bind(this)
             faceImage.src= e.target.result;
-        }
+        }.bind(this)
         reader.readAsDataURL(file);
         this.setState({operationMessage:"・診断するボタンを押してください"});
     }
@@ -74,13 +75,15 @@ export default class Diagnosis extends React.Component {
                 if(!response.ok){
                     throw new Error();
                 }
-                const result =response.json();
+                return response.json();
+            }).then(result =>{
                 //result及びresult内部のパラメータがnullまたはundifinedの場合にエラーとして処理を行う
                 if(!result || !result.message || (result.ikiikiValue != 0 && !result.ikiikiValue)){
                     throw new Error();
                 }
                 if(result.hasFaceDiagnosed){
-                    this.setState({resultMessage:`${result.date}本日のイキイキ度は${result.ikiikiValue}です。\n ${result.message}`});
+                    this.setState({resistDayMessage:`${result.date}本日のイキイキ度は${result.ikiikiValue}です。`});
+                    this.setState({resultMessage:`${result.message}`});
                 }else{
                      this.setState({resultMessage:result.message});
                 }                    
@@ -97,13 +100,14 @@ export default class Diagnosis extends React.Component {
                 <div className={classes.username}><p>ID:{this.props.ID}</p></div>
                 <div className={classes.return_to_function_select_area} onClick={this.clickReturnToFunctionSelection}><button>機能選択画面に戻る</button></div>
                 <div className={classes.message_area}><p>{this.state.operationMessage}</p></div>
-                <div className={classes.photo_area} id="photo_area"></div>
+                <div className={classes.photo_area} id="photo_area">{this.state.photoimage}</div>
                 <div className={classes.button_area}>
                     <label htmlFor="filename" className={classes.label}>画像を選択<input type="file" id="filename" accept=".png,.jpg,.jpeg" onChange={this.clickImageSelect}/></label>    
                     <button className={classes.diagnose_button} onClick={this.clickDiagnose}>診断する</button>
                 </div>
                 <div className={classes.diagnose_result_area} id="dianose_result_area">
-                     <p>{this.state.resultMessage}{this.state.imageHeight}</p>
+                    <p>{this.state.resistDayMessage}</p>
+                     <p>{this.state.resultMessage}</p>
                 </div>
             </>
         );
