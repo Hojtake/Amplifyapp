@@ -1,0 +1,35 @@
+body{
+    background-color: rgb(210, 210, 210);
+}
+
+button.function{
+    font-size: 40px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(97, 97, 204);
+    box-shadow:3px 3px 6px gray;
+    min-width: 60%;
+
+}
+div.function_area{
+    text-align: center;
+}
+
+div.logout_button{
+    text-align: right;
+    margin-right: 20px;
+}
+
+h1{
+    font-size: 30px;
+    background-color: rgb(124, 235, 255);
+    
+}
+div.username{
+    margin: 0px;
+    text-align: right;
+}
+div.username>p {
+    font-size: 14px;
+    text-decoration: underline;
+       
+}

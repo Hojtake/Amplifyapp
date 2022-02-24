@@ -1,0 +1,103 @@
+body{
+    background-color: rgb(210, 210, 210);
+}
+
+button.function{
+    font-size: 40px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(159, 162, 165);
+    box-shadow:3px 3px 6px gray;
+    min-width: 60%;
+
+}
+div.photo_area{
+    clear: both;
+    background-color: white;
+    text-align: center;
+    
+    margin-right: 10px;
+    width: 700px;
+    height: 400px;
+    float: left;
+    margin-bottom: 10px;
+    
+
+}
+
+div.return_to_function_select_area{
+    
+    width: 18%;
+    max-width: 180px;
+    margin-right: 20px;
+    max-width: 200px;
+    float: right;
+    text-align: left;
+}
+
+div.message_area{
+    
+    width: 700px;
+    float: left;
+}
+
+h1{
+    font-size: 30px;
+    background-color: rgb(124, 235, 255);
+    
+}
+div.diagnose_result_area{
+    clear: both;
+    margin-top: 20px;
+    background-color: white;
+    
+    width: 910px;
+    height: 80px;
+    text-align: center;
+    
+}
+div.button_area{
+    width: 200px;
+    height: 400px;
+    float: left;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+button.diagnose_button{
+    color:white;
+    background-color: rgb(97, 97, 204);
+    font-size: 30px;
+    width: 200px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    padding: 7px 20px;
+    border-radius: 80px;
+    cursor: pointer;
+}
+div.username{
+    margin: 0px;
+    text-align: right;
+}
+div.username>p {
+    font-size: 14px;
+    text-decoration: underline;
+       
+}
+label > input{
+    display: none;     
+}
+label{
+    display: inline-block;
+    background-color:#EFEFEF;
+    border-color: black;
+    border: 0.5px solid;
+    border-color: black;
+    font-size: 30px;
+    padding: 7px 20px;
+    border-radius: 80px;
+    cursor: pointer;
+    }
+label:hover{
+    background-color: #E3E3E3;
+}
