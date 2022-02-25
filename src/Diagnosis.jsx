@@ -64,6 +64,8 @@ export default class Diagnosis extends React.Component {
     }
 
     clickDiagnose = ()=>{
+    	this.setState({resistDayMessage:null});
+    	this.setState({resultMessage:null});
         const image = document.getElementById("getimg");
         if(image == null){
             this.setState({resultMessage:"画像を選択してから診断するボタンを押してください。"});    
