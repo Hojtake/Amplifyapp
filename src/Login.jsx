@@ -17,12 +17,7 @@ export default class Login extends React.Component{
         
         const api = new IkiikiFaceDiagnoseAPI();
         api.callLoginAPI(this.state.ID,this.state.password)
-        .then(response => {
-            if(!response.ok){
-                throw new Error();            
-            }
-            return response.json();
-        }).then(result =>{
+        .then(result =>{
             //resultがnull,undifinedな場合にエラーとして処理を行う
             if(!result){
                 throw new Error();

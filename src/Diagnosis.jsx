@@ -4,8 +4,6 @@ import ReactDOM from "react-dom";
 import FunctionSelection  from "./FunctionSelection.jsx";
 import IkiikiFaceDiagnoseAPI from "./IkiikiFaceDiagnoseAPI";
 import classes from "./Diagnosis.module.css";
-import { render } from "@testing-library/react";
-import { renderIntoDocument } from "react-dom/test-utils";
 export default class Diagnosis extends React.Component {
     constructor(props){
         super(props);
@@ -73,12 +71,7 @@ export default class Diagnosis extends React.Component {
         else{
             const api = new IkiikiFaceDiagnoseAPI();
             api.callFaceDiagnoseAPI(image.getAttribute("src"),this.props.ID)
-            .then(response =>{
-                if(!response.ok){
-                    throw new Error();
-                }
-                return response.json();
-            }).then(result =>{
+            .then(result =>{
                 //result及びresult内部のパラメータがnullまたはundifinedの場合にエラーとして処理を行う
                 if(!result || !result.message || (result.ikiikiValue != 0 && !result.ikiikiValue)){
                     throw new Error();
