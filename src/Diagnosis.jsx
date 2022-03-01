@@ -77,13 +77,16 @@ export default class Diagnosis extends React.Component {
                     throw new Error();
                 }
                 if(result.hasFaceDiagnosed){
+                    if(!result.date || result.ikiikiValue == ""){
+                        throw new Error();
+                    }
                     this.setState({resistDayMessage:`${result.date}本日のイキイキ度は${result.ikiikiValue}です。`});
                     this.setState({resultMessage:`${result.message}`});
                 }else{
                      this.setState({resultMessage:result.message});
                 }                    
             }).catch(()=>{
-                this.setState({message:"予期しないエラーが発生しました。しばらく待ってから再度実行してください。"});
+                this.setState({resultMessage:"予期しないエラーが発生しました。しばらく待ってから再度実行してください。"});
             });     
         }
     }
@@ -92,17 +95,17 @@ export default class Diagnosis extends React.Component {
         return (
             <>
                 <h1>イキイキ顔診断画面</h1>
-                <div className={classes.username}><p>ID:{this.props.ID}</p></div>
+                <div className={classes.username}><p id="ID">ID:{this.props.ID}</p></div>
                 <div className={classes.return_to_function_select_area} onClick={this.clickReturnToFunctionSelection}><button>機能選択画面に戻る</button></div>
                 <div className={classes.message_area}><p>{this.state.operationMessage}</p></div>
                 <div className={classes.photo_area} id="photo_area">{this.state.photoimage}</div>
                 <div className={classes.button_area}>
                     <label htmlFor="filename" className={classes.label}>画像を選択<input type="file" id="filename" accept=".png,.jpg,.jpeg" onChange={this.clickImageSelect}/></label>    
-                    <button className={classes.diagnose_button} onClick={this.clickDiagnose}>診断する</button>
+                    <button className={classes.diagnose_button} onClick={this.clickDiagnose} id="diagnose_button">診断する</button>
                 </div>
                 <div className={classes.diagnose_result_area} id="dianose_result_area">
-                    <p>{this.state.resistDayMessage}</p>
-                     <p>{this.state.resultMessage}</p>
+                    <p id="resist_day">{this.state.resistDayMessage}</p>
+                     <p id="result_msg">{this.state.resultMessage}</p>
                 </div>
             </>
         );

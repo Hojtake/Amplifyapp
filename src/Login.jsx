@@ -18,15 +18,15 @@ export default class Login extends React.Component{
         const api = new IkiikiFaceDiagnoseAPI();
         api.callLoginAPI(this.state.ID,this.state.password)
         .then(result =>{
+            
             //resultがnull,undifinedな場合にエラーとして処理を行う
             if(!result){
                 throw new Error();
             }
             if (result.hasLoginAuthenticated) {
-                ReactDOM.render(<FunctionSelection ID={this.state.ID} />, document.getElementById("root"));                
+                ReactDOM.render(<FunctionSelection ID={result.ID} />, document.getElementById("root"));                
             }else{
                 if(!result.message){
-                    console.log(result.message);
                     throw new Error();
                 }
                 this.setState({message:result.message});
@@ -59,7 +59,7 @@ export default class Login extends React.Component{
                         パスワード<br/>
                         <input type="password" className={classes.box2} placeholder="Password" id="password" pattern="^[0-9a-zA-Z]+$" title="半角英数字のみ入力してください"value={this.state.password} onChange={this.handleChangePassWord}></input>
                         <button type="submit" onClick={this.clickLogin}>ログイン</button>
-                        <div className={classes.errMessage}>
+                        <div className={classes.errMessage} id="errMsg">
                             <p>{this.state.message}</p>
                         </div>
                     </form>

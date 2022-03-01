@@ -1,5 +1,5 @@
 export default class IkiikiFaceDiagnoseAPI {
-    callLoginAPI = async function (ID, password) {
+    async callLoginAPI (ID, password) {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
        
@@ -13,7 +13,7 @@ export default class IkiikiFaceDiagnoseAPI {
         return response.json();
     }
 
-    callFaceDiagnoseAPI = async function (Image, ID) {
+    async callFaceDiagnoseAPI (Image, ID) {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         const requestOptions = {
