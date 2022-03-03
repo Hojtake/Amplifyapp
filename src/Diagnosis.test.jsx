@@ -3,7 +3,7 @@ import IkiikiFaceDiagnoseAPI from "./IkiikiFaceDiagnoseAPI";
 import React from "react";
 import {render} from "@testing-library/react";
 import { act } from "react-dom/test-utils";
-import {shallow} from "enzyme";
+
 
 jest.mock("./IkiikiFaceDiagnoseAPI");
 it("イキイキ顔診断が失敗した場合にメッセージが正しく表示されていることの確認",async ()=>{
