@@ -14,7 +14,12 @@ export default class Login extends React.Component{
     }
     
     clickLogin = ()=>{
-        
+        if(this.state.message.match(/[A-Za-z0-9]+/) || this.state.ID.match(/[A-Za-z0-9]+/)){
+           return; 
+        }
+        if(this.state.message == "" || this.state.ID == ""){
+            return;
+        }
         const api = new IkiikiFaceDiagnoseAPI();
         api.callLoginAPI(this.state.ID,this.state.password)
         .then(result =>{
