@@ -14,10 +14,13 @@ export default class Login extends React.Component{
     }
     
     clickLogin = ()=>{
-        if(this.state.message.match(/[A-Za-z0-9]+/) || this.state.ID.match(/[A-Za-z0-9]+/)){
+        
+        if(String(this.state.password).match(/[A-Za-z0-9]+/)==null || String(this.state.ID).match(/[A-Za-z0-9]+/) == null){
+            
            return; 
         }
-        if(this.state.message == "" || this.state.ID == ""){
+        if(this.state.password == "" || this.state.ID == ""){
+            
             return;
         }
         const api = new IkiikiFaceDiagnoseAPI();
@@ -60,9 +63,9 @@ export default class Login extends React.Component{
                 <div className={classes.main}>
                     <form onSubmit={this.handleSubmit}>
                         ID<br/>
-                        <input type="text" className={classes.box1} placeholder="ID" id="ID" pattern="^[0-9a-zA-Z]+$" title="半角英数字のみ入力してください" value={this.state.ID} onChange={this.handleChangeID}></input><br/>
+                        <input type="text" className={classes.box1} placeholder="ID" id="ID" pattern="^[0-9a-zA-Z]+$" title="半角英数字のみ入力してください" required value={this.state.ID} onChange={this.handleChangeID}></input><br/>
                         パスワード<br/>
-                        <input type="password" className={classes.box2} placeholder="Password" id="password" pattern="^[0-9a-zA-Z]+$" title="半角英数字のみ入力してください"value={this.state.password} onChange={this.handleChangePassWord}></input>
+                        <input type="password" className={classes.box2} placeholder="Password" id="password" pattern="^[0-9a-zA-Z]+$" title="半角英数字のみ入力してください"required value={this.state.password} onChange={this.handleChangePassWord}></input>
                         <button type="submit" onClick={this.clickLogin}>ログイン</button>
                         <div className={classes.errMessage} id="errMsg">
                             <p>{this.state.message}</p>
