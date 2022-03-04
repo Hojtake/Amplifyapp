@@ -1,10 +1,12 @@
 import Diagnosis from "./Diagnosis";
 import IkiikiFaceDiagnoseAPI from "./IkiikiFaceDiagnoseAPI";
 import React from "react";
-import {render} from "@testing-library/react";
+import {fireEvent, render, waitFor} from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import UserEvent from "@testing-library/user-event"
 import fs from "fs";
+import userEvent from "@testing-library/user-event";
+import { prototype } from "events";
 
 
 jest.mock("./IkiikiFaceDiagnoseAPI");
@@ -396,17 +398,19 @@ it("画像を選択する前に診断を実行したの場合のテスト",async
 it("画面に対して横長な画像を選択したときのテスト",async() =>{
     const WINDOW_WIDTH = 700;
     const TEST_ID_VAL = "testuser";
-    const buffer =fs.readFileSync("./testImage/sample1.jpeg");
-    
+    const buffer =fs.readFileSync("./testImage/sample1.jpeg").buffer;
     const file = new File([buffer],"sample1.jpeg",{type:"image/jpeg",});
+    console.log(file.type)
     act (() => {
         render(<Diagnosis ID={TEST_ID_VAL}/>);
     });
+
     const inputFile = document.getElementById("filename");
-    act(() =>{
-        UserEvent.upload(inputFile,file);
+
+    await waitFor(()=>{
+        userEvent.upload(inputFile,file);
     });
     const img = document.getElementById("getimg");
-    console.log(img);
-
+    
+    
 })
