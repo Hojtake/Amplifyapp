@@ -19,19 +19,15 @@ export default class Login extends React.Component{
             
            return; 
         }
-        if(this.state.password == "" || this.state.ID == ""){
-            
-            return;
-        }
         const api = new IkiikiFaceDiagnoseAPI();
         api.callLoginAPI(this.state.ID,this.state.password)
         .then(result =>{
-            
+            //console.log(result);
             //resultがnull,undifinedな場合にエラーとして処理を行う
             if(!result){
                 throw new Error();
             }
-            if (result.hasLoginAuthenticated) {
+            if (result.hasLoginAuthenticated && result.ID) {
                 ReactDOM.render(<FunctionSelection ID={result.ID} />, document.getElementById("root"));                
             }else{
                 if(!result.message){

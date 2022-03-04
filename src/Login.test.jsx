@@ -36,6 +36,21 @@ it("正常系、ID未入力で押した場合APIが実行されないことの�
     spy.mockRestore();
 });
 
+it("正常系、ID,Passwordの入力に合わせてinputのonCahgeメソッドが実行されているかの確認",() =>{
+    const TEST_ID_VAL = "testuser";
+    const TEST_PASSWORD_VAL = "testpassword";
+    act (() => {
+        render(<Login/>);
+    });
+    const inputID = document.getElementById("ID");
+    const inputPassWord = document.getElementById("password");
+
+    UserEvent.type(inputID, TEST_ID_VAL);
+    UserEvent.type(inputPassWord,TEST_PASSWORD_VAL);
+    expect(inputID.value).toBe(TEST_ID_VAL);
+    expect(inputPassWord.value).toBe(TEST_PASSWORD_VAL);
+});
+
 it("正常系、ログイン認証成功時にReactDomが実行されるかの確認",async ()=>{
     const TEST_ID_VAL = "testuser";
     const TEST_PASSWORD_VAL = "testpassword";
@@ -138,7 +153,8 @@ it("異常系、API実行時、ログイン認証に失敗しているがメッ�
     const TEST_ID_VAL = "testuser";
     const TEST_PASSWORD_VAL = "testpassword";
     const fakeResult = {
-        hasLoginAuthenticated:false
+        hasLoginAuthenticated:false,
+        ID:null
     }
     IkiikiFaceDiagnoseAPI.mockImplementation(() =>{
         return{
@@ -163,10 +179,14 @@ it("異常系、API実行時、ログイン認証に失敗しているがメッ�
     
     expect(errMsg.innerHTML).toBe("予期しないエラーが発生しました。しばらく待ってから再度実行してください。");
 })
-/*
-it("異常系、API実行時、レスポンスが空の場合",async ()=>{
-    const fakeResult = {
 
+it("異常系、API実行時、ログイン認証に成功しているがIDが返らなかった場合",async ()=>{
+    const TEST_ID_VAL = "testuser";
+    const TEST_PASSWORD_VAL = "testpassword";
+    const fakeResult = {
+        hasLoginAuthenticated:true,
+        ID:null,
+        message:null
     }
     IkiikiFaceDiagnoseAPI.mockImplementation(() =>{
         return{
@@ -179,6 +199,10 @@ it("異常系、API実行時、レスポンスが空の場合",async ()=>{
     act (() => {
         render(<Login/>);
     });
+    const inputID = document.getElementById("ID");
+    const inputPassWord = document.getElementById("password");
+    UserEvent.type(inputID, TEST_ID_VAL);
+    UserEvent.type(inputPassWord,TEST_PASSWORD_VAL);
     const loginButton = document.querySelector("button[type='submit']"); 
     await act(async () => {
         loginButton.dispatchEvent(new MouseEvent("click",{bubbles:true}));
@@ -186,9 +210,11 @@ it("異常系、API実行時、レスポンスが空の場合",async ()=>{
     const errMsg = document.querySelector("p");
     
     expect(errMsg.innerHTML).toBe("予期しないエラーが発生しました。しばらく待ってから再度実行してください。");
-})
+});
 
 it("異常系、API実行時、レスポンスがnullの場合",async ()=>{
+    const TEST_ID_VAL = "testuser";
+    const TEST_PASSWORD_VAL = "testpassword";
     const fakeResult = null;
     IkiikiFaceDiagnoseAPI.mockImplementation(() =>{
         return{
@@ -201,6 +227,10 @@ it("異常系、API実行時、レスポンスがnullの場合",async ()=>{
     act (() => {
         render(<Login/>);
     });
+    const inputID = document.getElementById("ID");
+    const inputPassWord = document.getElementById("password");
+    UserEvent.type(inputID, TEST_ID_VAL);
+    UserEvent.type(inputPassWord,TEST_PASSWORD_VAL);
     const loginButton = document.querySelector("button[type='submit']"); 
     await act(async () => {
         loginButton.dispatchEvent(new MouseEvent("click",{bubbles:true}));
@@ -208,20 +238,4 @@ it("異常系、API実行時、レスポンスがnullの場合",async ()=>{
     const errMsg = document.querySelector("p");
     
     expect(errMsg.innerHTML).toBe("予期しないエラーが発生しました。しばらく待ってから再度実行してください。");
-})
-it("正常系、ID,Passwordの入力に合わせてinputのonCahgeメソッドが実行されているかの確認",() =>{
-    const TEST_ID_VAL = "testuser";
-    const TEST_PASSWORD_VAL = "testpassword";
-    act (() => {
-        render(<Login/>);
-    });
-    const inputID = document.getElementById("ID");
-    const inputPassWord = document.getElementById("password");
-
-    UserEvent.type(inputID, TEST_ID_VAL);
-    UserEvent.type(inputPassWord,TEST_PASSWORD_VAL);
-    expect(inputID.value).toBe(TEST_ID_VAL);
-    expect(inputPassWord.value).toBe(TEST_PASSWORD_VAL);
 });
-
-*/

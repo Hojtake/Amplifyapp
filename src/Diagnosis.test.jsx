@@ -3,6 +3,8 @@ import IkiikiFaceDiagnoseAPI from "./IkiikiFaceDiagnoseAPI";
 import React from "react";
 import {render} from "@testing-library/react";
 import { act } from "react-dom/test-utils";
+import UserEvent from "@testing-library/user-event"
+import fs from "fs";
 
 
 jest.mock("./IkiikiFaceDiagnoseAPI");
@@ -388,5 +390,23 @@ it("画像を選択する前に診断を実行したの場合のテスト",async
 
     expect(document.querySelector("p[id='result_msg']").innerHTML).toBe(ERR_MSG_VAL);
     expect(document.querySelector("p[id='resist_day']").innerHTML).toBe("");
+
 });
 
+it("画面に対して横長な画像を選択したときのテスト",async() =>{
+    const WINDOW_WIDTH = 700;
+    const TEST_ID_VAL = "testuser";
+    const buffer =fs.readFileSync("./testImage/sample1.jpeg");
+    
+    const file = new File([buffer],"sample1.jpeg",{type:"image/jpeg",});
+    act (() => {
+        render(<Diagnosis ID={TEST_ID_VAL}/>);
+    });
+    const inputFile = document.getElementById("filename");
+    act(() =>{
+        UserEvent.upload(inputFile,file);
+    });
+    const img = document.getElementById("getimg");
+    console.log(img);
+
+})
