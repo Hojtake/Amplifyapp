@@ -96,7 +96,7 @@ export default class Diagnosis extends React.Component {
             <>
                 <h1>イキイキ顔診断画面</h1>
                 <div className={classes.username}><p id="ID">ID:{this.props.ID}</p></div>
-                <div className={classes.return_to_function_select_area} onClick={this.clickReturnToFunctionSelection}><button>機能選択画面に戻る</button></div>
+                <div className={classes.return_to_function_select_area} ><button onClick={this.clickReturnToFunctionSelection} id="clickreturn">機能選択画面に戻る</button></div>
                 <div className={classes.message_area}><p>{this.state.operationMessage}</p></div>
                 <div className={classes.photo_area} id="photo_area">{this.state.photoimage}</div>
                 <div className={classes.button_area}>

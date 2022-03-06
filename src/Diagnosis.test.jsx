@@ -1,6 +1,7 @@
 import Diagnosis from "./Diagnosis";
 import IkiikiFaceDiagnoseAPI from "./IkiikiFaceDiagnoseAPI";
 import React from "react";
+import ReactDOM from "react-dom";
 import {fireEvent, render, waitFor} from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import UserEvent from "@testing-library/user-event"
@@ -10,7 +11,7 @@ import { prototype } from "events";
 
 
 jest.mock("./IkiikiFaceDiagnoseAPI");
-it("イキイキ顔診断が失敗した場合にメッセージが正しく表示されていることの確認",async ()=>{
+it("正常系、イキイキ顔診断が失敗した場合にメッセージが正しく表示されていることの確認",async ()=>{
     const TEST_ID_VAL = "testuser";
     const RESULT_MSG_VAL = "画像ファイルが大きすぎます。5MB以下の画像を選択してください。"
     const fakeResult = {
@@ -44,7 +45,7 @@ it("イキイキ顔診断が失敗した場合にメッセージが正しく表�
     expect(document.querySelector("p[id='resist_day']").innerHTML).toBe("");
 })
 
-it("イキイキ顔診断が成功した場合にメッセージが正しく表示されていることの確認",async ()=>{
+it("正常系、イキイキ顔診断が成功した場合にメッセージが正しく表示されていることの確認",async ()=>{
     const TEST_ID_VAL = "testuser";
     const RESULT_MSG_VAL = "本日も元気に働きましょう！"
     const IKIIKI_VAL = 70;
@@ -80,7 +81,7 @@ it("イキイキ顔診断が成功した場合にメッセージが正しく表�
     expect(document.querySelector("p[id='resist_day']").innerHTML).toBe(`${DATE_VAL}本日のイキイキ度は${IKIIKI_VAL}です。`);
 })
 
-it("レスポンスが正常に返らなかった場合のテスト（レスポンスの中身が空）",async ()=>{
+it("異常系、レスポンスが正常に返らなかった場合のテスト（レスポンスの中身が空）",async ()=>{
     const TEST_ID_VAL = "testuser";
     const ERR_MSG_VAL = "予期しないエラーが発生しました。しばらく待ってから再度実行してください。"
     const fakeResult = {
@@ -111,7 +112,7 @@ it("レスポンスが正常に返らなかった場合のテスト（レスポ�
     expect(document.querySelector("p[id='resist_day']").innerHTML).toBe("");
 })
 
-it("レスポンスが正常に返らなかった場合のテスト（レスポンスの中身がnull）",async ()=>{
+it("異常系、レスポンスが正常に返らなかった場合のテスト（レスポンスの中身がnull）",async ()=>{
     const TEST_ID_VAL = "testuser";
     const fakeResult = null;
     const ERR_MSG_VAL = "予期しないエラーが発生しました。しばらく待ってから再度実行してください。"
@@ -139,7 +140,7 @@ it("レスポンスが正常に返らなかった場合のテスト（レスポ�
     expect(document.querySelector("p[id='resist_day']").innerHTML).toBe("");
 })
 
-it("診断は成功しているがイキイキ度がnullの場合のテスト",async ()=>{
+it("異常系、診断は成功しているがイキイキ度がnullの場合のテスト",async ()=>{
     const TEST_ID_VAL = "testuser";
     const RESULT_MSG_VAL = "本日も元気に働きましょう！"
     const IKIIKI_VAL =null;
@@ -176,7 +177,7 @@ it("診断は成功しているがイキイキ度がnullの場合のテスト",a
     expect(document.querySelector("p[id='resist_day']").innerHTML).toBe("");
 })
 
-it("診断は成功しているがdateがnullの場合のテスト",async ()=>{
+it("異常系、診断は成功しているがdateがnullの場合のテスト",async ()=>{
     const TEST_ID_VAL = "testuser";
     const RESULT_MSG_VAL = "本日も元気に働きましょう！"
     const IKIIKI_VAL = 70;
@@ -213,7 +214,7 @@ it("診断は成功しているがdateがnullの場合のテスト",async ()=>{
     expect(document.querySelector("p[id='resist_day']").innerHTML).toBe("");
 })
 
-it("診断は成功しているがmessageがnullの場合のテスト",async ()=>{
+it("異常系、診断は成功しているがmessageがnullの場合のテスト",async ()=>{
     const TEST_ID_VAL = "testuser";
     const RESULT_MSG_VAL = null;
     const IKIIKI_VAL = 70;
@@ -250,7 +251,7 @@ it("診断は成功しているがmessageがnullの場合のテスト",async ()=
     expect(document.querySelector("p[id='resist_day']").innerHTML).toBe("");
 })
 
-it("診断は成功しているがmessageが空白の場合のテスト",async ()=>{
+it("異常系、診断は成功しているがmessageが空白の場合のテスト",async ()=>{
     const TEST_ID_VAL = "testuser";
     const RESULT_MSG_VAL = "";
     const IKIIKI_VAL = 70;
@@ -287,7 +288,7 @@ it("診断は成功しているがmessageが空白の場合のテスト",async (
     expect(document.querySelector("p[id='resist_day']").innerHTML).toBe("");
 })
 
-it("診断は成功しているがdateが空白の場合のテスト",async ()=>{
+it("異常系、診断は成功しているがdateが空白の場合のテスト",async ()=>{
     const TEST_ID_VAL = "testuser";
     const RESULT_MSG_VAL = "本日も元気に働きましょう！";
     const IKIIKI_VAL = 70;
@@ -324,7 +325,7 @@ it("診断は成功しているがdateが空白の場合のテスト",async ()=>
     expect(document.querySelector("p[id='resist_day']").innerHTML).toBe("");
 });
 
-it("診断は成功しているがikiikiValueが空白の場合のテスト",async ()=>{
+it("異常系、診断は成功しているがikiikiValueが空白の場合のテスト",async ()=>{
     const TEST_ID_VAL = "testuser";
     const RESULT_MSG_VAL = "本日も元気に働きましょう！";
     const IKIIKI_VAL = "";
@@ -361,7 +362,7 @@ it("診断は成功しているがikiikiValueが空白の場合のテスト",asy
     expect(document.querySelector("p[id='resist_day']").innerHTML).toBe("");
 });
 
-it("画像を選択する前に診断を実行したの場合のテスト",async ()=>{
+it("異常系、画像を選択する前に診断を実行したの場合のテスト",async ()=>{
     const TEST_ID_VAL = "testuser";
     const RESULT_MSG_VAL = "本日も元気に働きましょう！";
     const IKIIKI_VAL = "";
@@ -395,7 +396,7 @@ it("画像を選択する前に診断を実行したの場合のテスト",async
 
 });
 
-it("画面に対して横長な画像を選択したときのテスト",async() =>{
+it("正常系、画面に対して横長な画像を選択したときのテスト",async() =>{
     const WINDOW_WIDTH = 700;
     const TEST_ID_VAL = "testuser";
     const buffer =fs.readFileSync("./testImage/sample1.jpeg").buffer;
@@ -413,4 +414,20 @@ it("画面に対して横長な画像を選択したときのテスト",async() 
     const img = document.getElementById("getimg");
     
     
-})
+});
+
+it("正常系、機能選択画面に戻るボタンを押したときに関数が実行されることの確認",async()=>{
+    const TEST_ID_VAL = "testuser";
+    act (() => {
+        render(<Diagnosis ID={TEST_ID_VAL}/>);
+    });
+    const spyRender = jest.spyOn(ReactDOM,"render");
+    spyRender.mockImplementation(()=>{return jest.fn()});
+    const clickReturnToFunctionSelection = document.getElementById("clickreturn");
+    await act(async() =>{
+        clickReturnToFunctionSelection.dispatchEvent(new MouseEvent("click",{bubbles:true}));
+    });
+    
+    expect(spyRender).toBeCalled();
+    spyRender.mockRestore();
+});

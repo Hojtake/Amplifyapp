@@ -28,6 +28,7 @@ export default class Login extends React.Component{
                 throw new Error();
             }
             if (result.hasLoginAuthenticated && result.ID) {
+                
                 ReactDOM.render(<FunctionSelection ID={result.ID} />, document.getElementById("root"));                
             }else{
                 if(!result.message){

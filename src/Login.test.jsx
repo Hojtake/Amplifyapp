@@ -5,10 +5,10 @@ import ReactDOM  from "react-dom";
 import {render} from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import UserEvent from "@testing-library/user-event"
+import userEvent from "@testing-library/user-event";
 
 
 jest.mock("./IkiikiFaceDiagnoseAPI");
-
 it("正常系、ID未入力で押した場合APIが実行されないことの確認",async() =>{
     const TEST_ID_VAL = "testuser";
     const fakeResult = {
@@ -27,13 +27,11 @@ it("正常系、ID未入力で押した場合APIが実行されないことの�
     act (() => {
         render(<Login/>);
     });
-    const spy = jest.spyOn(ReactDOM,"render");
     const loginButton = document.querySelector("button[type='submit']"); 
     await act(async () => {
-        loginButton.dispatchEvent(new MouseEvent("click",{bubbles:true}));
+        userEvent.click(loginButton);
     });
-    expect(spy).toHaveBeenCalledTimes(0);
-    spy.mockRestore();
+
 });
 
 it("正常系、ID,Passwordの入力に合わせてinputのonCahgeメソッドが実行されているかの確認",() =>{
@@ -51,40 +49,7 @@ it("正常系、ID,Passwordの入力に合わせてinputのonCahgeメソッド�
     expect(inputPassWord.value).toBe(TEST_PASSWORD_VAL);
 });
 
-it("正常系、ログイン認証成功時にReactDomが実行されるかの確認",async ()=>{
-    const TEST_ID_VAL = "testuser";
-    const TEST_PASSWORD_VAL = "testpassword";
-    const fakeResult = {
-        hasLoginAuthenticated:true,
-        ID:TEST_ID_VAL,
-        message:null
-    }
-    IkiikiFaceDiagnoseAPI.mockImplementation(() =>{
-        return{
-            callLoginAPI: () => {
-                return Promise.resolve(fakeResult);
-            }
-        };
-    });
 
-    act (() => {
-        render(<Login/>);
-    });
-    const spy = jest.spyOn(ReactDOM,"render");
-    const inputID = document.getElementById("ID");
-    const inputPassWord = document.getElementById("password");
-
-    UserEvent.type(inputID, TEST_ID_VAL);
-    UserEvent.type(inputPassWord,TEST_PASSWORD_VAL);
-
-    const loginButton = document.querySelector("button[type='submit']"); 
-    await act(async () => {
-        loginButton.dispatchEvent(new MouseEvent("click",{bubbles:true}));
-    });
-    expect(spy).toHaveBeenCalled();
-    spy.mockRestore();
-    
-});
 
 it("正常系、ログイン認証失敗時にメッセージが反映されているかのテスト",async ()=>{
     const TEST_ID_VAL = "testuser";
@@ -112,12 +77,47 @@ it("正常系、ログイン認証失敗時にメッセージが反映されて�
     UserEvent.type(inputPassWord,TEST_PASSWORD_VAL);
     const loginButton = document.querySelector("button[type='submit']"); 
     await act(async () => {
-        loginButton.dispatchEvent(new MouseEvent("click",{bubbles:true}));
+        userEvent.click(loginButton);
     });
     const errMsg = document.querySelector("p");
     
     expect(errMsg.innerHTML).toBe("IDまたはパスワードが異なります。");
-})
+});
+
+it("正常系、ログイン認証成功時にReactDomが実行されるかの確認",async ()=>{
+    const TEST_ID_VAL = "testuser";
+    const TEST_PASSWORD_VAL = "testpassword";
+    const fakeResult = {
+        hasLoginAuthenticated:true,
+        ID:TEST_ID_VAL,
+        message:null
+    }
+    IkiikiFaceDiagnoseAPI.mockImplementation(() =>{
+        return{
+            callLoginAPI: () => {
+                return Promise.resolve(fakeResult);
+            }
+        };
+    });
+    act (() => {
+        render(<Login/>);
+    });
+    
+    const inputID = document.getElementById("ID");
+    const inputPassWord = document.getElementById("password");
+    UserEvent.type(inputID, TEST_ID_VAL);
+    UserEvent.type(inputPassWord,TEST_PASSWORD_VAL);
+
+    const spyRender = jest.spyOn(ReactDOM,"render");
+    spyRender.mockImplementation(()=>{return jest.fn()});
+
+    const loginButton = document.querySelector("button[type='submit']");
+    await act(async() =>{
+        UserEvent.click(loginButton);
+    })
+    expect(spyRender).toBeCalled();
+    spyRender.mockRestore();
+});
 
 it("異常系、API実行時レスポンスが空で返る場合",async ()=>{
     const TEST_ID_VAL = "testuser";
@@ -142,7 +142,7 @@ it("異常系、API実行時レスポンスが空で返る場合",async ()=>{
     UserEvent.type(inputPassWord,TEST_PASSWORD_VAL);
     const loginButton = document.querySelector("button[type='submit']"); 
     await act(async () => {
-        loginButton.dispatchEvent(new MouseEvent("click",{bubbles:true}));
+        userEvent.click(loginButton);
     });
     const errMsg = document.querySelector("p");
     
@@ -173,69 +173,10 @@ it("異常系、API実行時、ログイン認証に失敗しているがメッ�
     UserEvent.type(inputPassWord,TEST_PASSWORD_VAL);
     const loginButton = document.querySelector("button[type='submit']"); 
     await act(async () => {
-        loginButton.dispatchEvent(new MouseEvent("click",{bubbles:true}));
-    });
-    const errMsg = document.querySelector("p");
-    
-    expect(errMsg.innerHTML).toBe("予期しないエラーが発生しました。しばらく待ってから再度実行してください。");
-})
-
-it("異常系、API実行時、ログイン認証に成功しているがIDが返らなかった場合",async ()=>{
-    const TEST_ID_VAL = "testuser";
-    const TEST_PASSWORD_VAL = "testpassword";
-    const fakeResult = {
-        hasLoginAuthenticated:true,
-        ID:null,
-        message:null
-    }
-    IkiikiFaceDiagnoseAPI.mockImplementation(() =>{
-        return{
-            callLoginAPI: () => {
-                return Promise.resolve(fakeResult);
-            }
-        };
-    });
-
-    act (() => {
-        render(<Login/>);
-    });
-    const inputID = document.getElementById("ID");
-    const inputPassWord = document.getElementById("password");
-    UserEvent.type(inputID, TEST_ID_VAL);
-    UserEvent.type(inputPassWord,TEST_PASSWORD_VAL);
-    const loginButton = document.querySelector("button[type='submit']"); 
-    await act(async () => {
-        loginButton.dispatchEvent(new MouseEvent("click",{bubbles:true}));
+        userEvent.click(loginButton);
     });
     const errMsg = document.querySelector("p");
     
     expect(errMsg.innerHTML).toBe("予期しないエラーが発生しました。しばらく待ってから再度実行してください。");
 });
 
-it("異常系、API実行時、レスポンスがnullの場合",async ()=>{
-    const TEST_ID_VAL = "testuser";
-    const TEST_PASSWORD_VAL = "testpassword";
-    const fakeResult = null;
-    IkiikiFaceDiagnoseAPI.mockImplementation(() =>{
-        return{
-            callLoginAPI: () => {
-                return Promise.resolve(fakeResult);
-            }
-        };
-    });
-
-    act (() => {
-        render(<Login/>);
-    });
-    const inputID = document.getElementById("ID");
-    const inputPassWord = document.getElementById("password");
-    UserEvent.type(inputID, TEST_ID_VAL);
-    UserEvent.type(inputPassWord,TEST_PASSWORD_VAL);
-    const loginButton = document.querySelector("button[type='submit']"); 
-    await act(async () => {
-        loginButton.dispatchEvent(new MouseEvent("click",{bubbles:true}));
-    });
-    const errMsg = document.querySelector("p");
-    
-    expect(errMsg.innerHTML).toBe("予期しないエラーが発生しました。しばらく待ってから再度実行してください。");
-});
