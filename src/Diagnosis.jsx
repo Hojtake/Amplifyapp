@@ -73,11 +73,11 @@ export default class Diagnosis extends React.Component {
         api.callFaceDiagnoseAPI(image.getAttribute("src"),this.props.ID)
         .then(result =>{
             //result及びresult内部のパラメータがnullまたはundifinedの場合にエラーとして処理を行う
-            if(!result || !result.message || (result.ikiikiValue != 0 && !result.ikiikiValue)){
+            if(!result || !result.message){
                 throw new Error();
                 }
             if(result.hasFaceDiagnosed){
-                if(!result.date || result.ikiikiValue == ""){
+                if(!result.date || result.ikiikiValue == "" || result.ikiikiValue == null){
                     throw new Error();
                 }
                 this.setState({resistDayMessage:`${result.date}本日のイキイキ度は${result.ikiikiValue}です。`});
