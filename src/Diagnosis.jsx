@@ -16,6 +16,7 @@ export default class Diagnosis extends React.Component {
     clickImageSelect= (e)=>{
         
         this.setState({resultMessage:null});
+        this.setState({resistDayMessage:null});
         const filelist = e.target.files;
         if(filelist.length == 0) return;
         this.setState({photoimage:""});
