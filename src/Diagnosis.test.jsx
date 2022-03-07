@@ -2,12 +2,11 @@ import Diagnosis from "./Diagnosis";
 import IkiikiFaceDiagnoseAPI from "./IkiikiFaceDiagnoseAPI";
 import React from "react";
 import ReactDOM from "react-dom";
-import {fireEvent, render, waitFor} from "@testing-library/react";
+import {fireEvent, render, waitFor, screen} from "@testing-library/react";
 import { act } from "react-dom/test-utils";
-import UserEvent from "@testing-library/user-event"
 import fs from "fs";
 import userEvent from "@testing-library/user-event";
-import { prototype } from "events";
+
 
 
 jest.mock("./IkiikiFaceDiagnoseAPI");
@@ -38,7 +37,7 @@ it("正常系、イキイキ顔診断が失敗した場合にメッセージが�
     document.getElementById("photo_area").appendChild(dammyData);
     const diagnoseButton = document.querySelector("button[id='diagnose_button']")
     await act(async() =>{
-        diagnoseButton.dispatchEvent(new MouseEvent("click",{bubbles:true}))
+        userEvent.click(diagnoseButton);
     });
 
     expect(document.querySelector("p[id='result_msg']").innerHTML).toBe(RESULT_MSG_VAL);
@@ -74,12 +73,47 @@ it("正常系、イキイキ顔診断が成功した場合にメッセージが�
     document.getElementById("photo_area").appendChild(dammyData);
     const diagnoseButton = document.querySelector("button[id='diagnose_button']")
     await act(async() =>{
-        diagnoseButton.dispatchEvent(new MouseEvent("click",{bubbles:true}))
+        userEvent.click(diagnoseButton);
     });
     expect(document.querySelector("p[id='ID']").innerHTML).toBe(`ID:${TEST_ID_VAL}`)
     expect(document.querySelector("p[id='result_msg']").innerHTML).toBe(RESULT_MSG_VAL);
     expect(document.querySelector("p[id='resist_day']").innerHTML).toBe(`${DATE_VAL}本日のイキイキ度は${IKIIKI_VAL}です。`);
 })
+
+it("正常系、画像を選択したときにテスト操作ガイドのメッセージが更新されること",async() =>{
+    const TEST_ID_VAL = "testuser";
+    const imagefile=fs.readFileSync("./testImage/sample1.jpeg");
+    
+    const inputImage = new File([imagefile],"sample1.jpeg",{type:"image/jpeg",});
+    act (() => {
+        render(<Diagnosis ID={TEST_ID_VAL}/>);
+    });
+    const operationMsg = document.getElementById("operationMsg");
+    expect(operationMsg.innerHTML).toBe("・画像選択ボタンを押してください");
+    const inputFile = screen.getByLabelText("画像を選択");
+    
+    userEvent.upload(inputFile,inputImage);
+    expect(inputFile.files[0]).toStrictEqual(inputImage);
+    expect(inputFile.files).toHaveLength(1);
+    expect(operationMsg.innerHTML).toBe("・診断するボタンを押してください");
+});
+
+it("正常系、機能選択画面に戻るボタンを押したときに関数が実行されることの確認",async()=>{
+    const TEST_ID_VAL = "testuser";
+    act (() => {
+        render(<Diagnosis ID={TEST_ID_VAL}/>);
+    });
+    const spyRender = jest.spyOn(ReactDOM,"render");
+    spyRender.mockImplementation(()=>{return jest.fn()});
+    const clickReturnToFunctionSelection = document.getElementById("clickreturn");
+
+    await act(async() =>{
+        userEvent.click(clickReturnToFunctionSelection);
+    });
+    
+    expect(spyRender).toBeCalled();
+    spyRender.mockRestore();
+});
 
 it("異常系、レスポンスが正常に返らなかった場合のテスト（レスポンスの中身が空）",async ()=>{
     const TEST_ID_VAL = "testuser";
@@ -396,38 +430,3 @@ it("異常系、画像を選択する前に診断を実行したの場合のテ�
 
 });
 
-it("正常系、画面に対して横長な画像を選択したときのテスト",async() =>{
-    const WINDOW_WIDTH = 700;
-    const TEST_ID_VAL = "testuser";
-    const buffer =fs.readFileSync("./testImage/sample1.jpeg").buffer;
-    const file = new File([buffer],"sample1.jpeg",{type:"image/jpeg",});
-    console.log(file.type)
-    act (() => {
-        render(<Diagnosis ID={TEST_ID_VAL}/>);
-    });
-
-    const inputFile = document.getElementById("filename");
-
-    await waitFor(()=>{
-        userEvent.upload(inputFile,file);
-    });
-    const img = document.getElementById("getimg");
-    
-    
-});
-
-it("正常系、機能選択画面に戻るボタンを押したときに関数が実行されることの確認",async()=>{
-    const TEST_ID_VAL = "testuser";
-    act (() => {
-        render(<Diagnosis ID={TEST_ID_VAL}/>);
-    });
-    const spyRender = jest.spyOn(ReactDOM,"render");
-    spyRender.mockImplementation(()=>{return jest.fn()});
-    const clickReturnToFunctionSelection = document.getElementById("clickreturn");
-    await act(async() =>{
-        clickReturnToFunctionSelection.dispatchEvent(new MouseEvent("click",{bubbles:true}));
-    });
-    
-    expect(spyRender).toBeCalled();
-    spyRender.mockRestore();
-});

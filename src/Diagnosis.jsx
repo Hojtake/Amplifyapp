@@ -17,7 +17,6 @@ export default class Diagnosis extends React.Component {
         
         this.setState({resultMessage:null});
         const filelist = e.target.files;
-        
         if(filelist.length == 0) return;
         this.setState({photoimage:""});
         const reader = new FileReader();
@@ -66,29 +65,29 @@ export default class Diagnosis extends React.Component {
     	this.setState({resultMessage:null});
         const image = document.getElementById("getimg");
         if(image == null){
-            this.setState({resultMessage:"画像を選択してから診断するボタンを押してください。"});    
+            this.setState({resultMessage:"画像を選択してから診断するボタンを押してください。"});
+            return ;    
         }
-        else{
-            const api = new IkiikiFaceDiagnoseAPI();
-            api.callFaceDiagnoseAPI(image.getAttribute("src"),this.props.ID)
-            .then(result =>{
-                //result及びresult内部のパラメータがnullまたはundifinedの場合にエラーとして処理を行う
-                if(!result || !result.message || (result.ikiikiValue != 0 && !result.ikiikiValue)){
+        
+        const api = new IkiikiFaceDiagnoseAPI();
+        api.callFaceDiagnoseAPI(image.getAttribute("src"),this.props.ID)
+        .then(result =>{
+            //result及びresult内部のパラメータがnullまたはundifinedの場合にエラーとして処理を行う
+            if(!result || !result.message || (result.ikiikiValue != 0 && !result.ikiikiValue)){
+                throw new Error();
+                }
+            if(result.hasFaceDiagnosed){
+                if(!result.date || result.ikiikiValue == ""){
                     throw new Error();
                 }
-                if(result.hasFaceDiagnosed){
-                    if(!result.date || result.ikiikiValue == ""){
-                        throw new Error();
-                    }
-                    this.setState({resistDayMessage:`${result.date}本日のイキイキ度は${result.ikiikiValue}です。`});
-                    this.setState({resultMessage:`${result.message}`});
-                }else{
-                     this.setState({resultMessage:result.message});
-                }                    
-            }).catch(()=>{
-                this.setState({resultMessage:"予期しないエラーが発生しました。しばらく待ってから再度実行してください。"});
-            });     
-        }
+                this.setState({resistDayMessage:`${result.date}本日のイキイキ度は${result.ikiikiValue}です。`});
+                this.setState({resultMessage:`${result.message}`});
+            }else{                     
+                this.setState({resultMessage:result.message});
+            }                    
+        }).catch(()=>{
+            this.setState({resultMessage:"予期しないエラーが発生しました。しばらく待ってから再度実行してください。"});
+        });           
     }
 
     render(){        
@@ -97,7 +96,7 @@ export default class Diagnosis extends React.Component {
                 <h1>イキイキ顔診断画面</h1>
                 <div className={classes.username}><p id="ID">ID:{this.props.ID}</p></div>
                 <div className={classes.return_to_function_select_area} ><button onClick={this.clickReturnToFunctionSelection} id="clickreturn">機能選択画面に戻る</button></div>
-                <div className={classes.message_area}><p>{this.state.operationMessage}</p></div>
+                <div className={classes.message_area}><p id="operationMsg">{this.state.operationMessage}</p></div>
                 <div className={classes.photo_area} id="photo_area">{this.state.photoimage}</div>
                 <div className={classes.button_area}>
                     <label htmlFor="filename" className={classes.label}>画像を選択<input type="file" id="filename" accept=".png,.jpg,.jpeg" onChange={this.clickImageSelect}/></label>    

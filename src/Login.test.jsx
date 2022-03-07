@@ -149,6 +149,34 @@ it("異常系、API実行時レスポンスが空で返る場合",async ()=>{
     expect(errMsg.innerHTML).toBe("予期しないエラーが発生しました。しばらく待ってから再度実行してください。");
 })
 
+it("異常系、API実行時レスポンスがnullで返る場合",async ()=>{
+    const TEST_ID_VAL = "testuser";
+    const TEST_PASSWORD_VAL = "testpassword";
+    const fakeResult = null;
+    IkiikiFaceDiagnoseAPI.mockImplementation(() =>{
+        return{
+            callLoginAPI: () => {
+                return Promise.resolve(fakeResult);
+            }
+        };
+    });
+
+    act (() => {
+        render(<Login/>);
+    });
+    const inputID = document.getElementById("ID");
+    const inputPassWord = document.getElementById("password");
+    UserEvent.type(inputID, TEST_ID_VAL);
+    UserEvent.type(inputPassWord,TEST_PASSWORD_VAL);
+    const loginButton = document.querySelector("button[type='submit']"); 
+    await act(async () => {
+        userEvent.click(loginButton);
+    });
+    const errMsg = document.querySelector("p");
+    
+    expect(errMsg.innerHTML).toBe("予期しないエラーが発生しました。しばらく待ってから再度実行してください。");
+});
+
 it("異常系、API実行時、ログイン認証に失敗しているがメッセージが返らなかった場合",async ()=>{
     const TEST_ID_VAL = "testuser";
     const TEST_PASSWORD_VAL = "testpassword";
