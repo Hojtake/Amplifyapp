@@ -78,7 +78,7 @@ export default class Diagnosis extends React.Component {
                 throw new Error();
                 }
             if(result.hasFaceDiagnosed){
-                if(!result.date || result.ikiikiValue == null || result.ikiikiValue == ""){
+                if(!result.date || result.ikiikiValue === null || result.ikiikiValue === ""){
                     throw new Error();
                 }
                 this.setState({resistDayMessage:`${result.date}本日のイキイキ度は${result.ikiikiValue}です。`});
