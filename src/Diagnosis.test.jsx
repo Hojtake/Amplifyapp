@@ -21,12 +21,13 @@ const ERR_MSG = "予期しないエラーが発生しました。しばらく待
 
 jest.mock("./IkiikiFaceDiagnoseAPI");
 it("正常系、イキイキ顔診断が失敗した場合にメッセージが正しく表示されていることの確認",async ()=>{
+    const RESULT_MSG = "画像ファイルが大きすぎます。5MB以下の画像を選択してください。"
     const dummyResponseJson
  = {
         hasFaceDiagnosed:false,
         ikiikiValue:0,
         date:null,
-        message: "画像ファイルが大きすぎます。5MB以下の画像を選択してください。"
+        message: RESULT_MSG
     }
 
     IkiikiFaceDiagnoseAPI.mockImplementation(() =>{
