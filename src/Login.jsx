@@ -24,7 +24,7 @@ export default class Login extends React.Component{
         api.callLoginAPI(this.state.ID,this.state.password)
         .then(result =>{
             //console.log(result);
-            //resultがnull,undifinedな場合にエラーとして処理を行う
+            //resultがnull,undefinedな場合にエラーとして処理を行う
             if(!result){
                 throw new Error();
             }

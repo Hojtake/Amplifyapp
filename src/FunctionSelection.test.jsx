@@ -7,18 +7,18 @@ import userEvent from "@testing-library/user-event";
 
 
 it("正常系、機能選択画面入力時にIDが表示されているかのテスト",async ()=>{
-    const TEST_ID_VAL = "testuser"
+    const VALID_ID = "testuser"
 
     act (() => {
-        render(<FunctionSelection ID={TEST_ID_VAL}/>);
+        render(<FunctionSelection ID={VALID_ID}/>);
     });
-    expect(document.querySelector("p").innerHTML).toBe(`ID:${TEST_ID_VAL}`);
+    expect(document.querySelector("p").innerHTML).toBe(`ID:${VALID_ID}`);
 });
 
 it("正常系、ログアウトボタンを押したときにログイン画面に戻るかのテスト",async() =>{
-    const TEST_ID_VAL = "testuser"
+    const VALID_ID = "testuser"
     act (() => {
-        render(<FunctionSelection ID={TEST_ID_VAL}/>);
+        render(<FunctionSelection ID={VALID_ID}/>);
     });
     
     const logoutButton = document.querySelector("button[id='logout']");
@@ -37,9 +37,9 @@ it("正常系、ログアウトボタンを押したときにログイン画面�
 
 it("正常系、イキイキ顔診断ボタンを押したときにイキイキ顔診断画面に遷移するかのテスト",async() =>{
 
-    const TEST_ID_VAL = "testuser"
+    const VALID_ID = "testuser"
     act (() => {
-        render(<FunctionSelection ID={TEST_ID_VAL}/>);
+        render(<FunctionSelection ID={VALID_ID}/>);
     });
     const spyRender = jest.spyOn(ReactDOM,"render");
     spyRender.mockImplementation(()=>{return jest.fn()});

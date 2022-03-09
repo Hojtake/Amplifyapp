@@ -73,7 +73,7 @@ export default class Diagnosis extends React.Component {
         const api = new IkiikiFaceDiagnoseAPI();
         api.callFaceDiagnoseAPI(image.getAttribute("src"),this.props.ID)
         .then(result =>{
-            //result及びresult内部のパラメータがnullまたはundifinedの場合にエラーとして処理を行う
+            //result及びresult内部のパラメータがnullまたはundefinedの場合にエラーとして処理を行う
             if(!result || !result.message){
                 throw new Error();
                 }
@@ -103,7 +103,7 @@ export default class Diagnosis extends React.Component {
                     <label htmlFor="filename" className={classes.label}>画像を選択<input type="file" id="filename" accept=".png,.jpg,.jpeg" onChange={this.clickImageSelect}/></label>    
                     <button className={classes.diagnose_button} onClick={this.clickDiagnose} id="diagnose_button">診断する</button>
                 </div>
-                <div className={classes.diagnose_result_area} id="dianose_result_area">
+                <div className={classes.diagnose_result_area} id="diagnose_result_area">
                     <p id="resist_day">{this.state.resistDayMessage}</p>
                      <p id="result_msg">{this.state.resultMessage}</p>
                 </div>
