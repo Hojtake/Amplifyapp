@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Diagnosis from "./Diagnosis";
-import Login from "./Login.jsx";
+import Login from "./Login";
 import classes from"./FunctionSelection.module.css";
 
 export default class FunctionSelection extends React.Component{
@@ -10,10 +10,10 @@ export default class FunctionSelection extends React.Component{
         this.clickLogout = this.clickLogout.bind(this);
         this.clickIkiikiDiagnoseFace = this.clickIkiikiDiagnoseFace.bind(this);
     }
-    clickLogout = ()=>{
+    clickLogout = () =>{
         ReactDOM.render(<Login/>,document.getElementById("root"));
     }
-    clickIkiikiDiagnoseFace = ()=>{
+    clickIkiikiDiagnoseFace = () => {
         ReactDOM.render(<Diagnosis ID={this.props.ID}/>,document.getElementById("root"));
     }
 
@@ -22,9 +22,9 @@ export default class FunctionSelection extends React.Component{
             <>
                 <h1>機能選択画面</h1>
                 <div className={classes.username}><p>ID:{this.props.ID}</p></div>
-                <div className={classes.logout_button}><button onClick={()=>{this.clickLogout()}}>ログアウト</button></div>
+                <div className={classes.logout_button}><button onClick={this.clickLogout} id="logout">ログアウト</button></div>
                 <div className={classes.function_area}>
-                <button className={classes.function} onClick={()=>{this.clickIkiikiDiagnoseFace()}}>イキイキ顔診断</button>
+                <button className={classes.function} onClick={this.clickIkiikiDiagnoseFace} id="diagnoseFace">イキイキ顔診断</button>
                 </div>
             </>
         )

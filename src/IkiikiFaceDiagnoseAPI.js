@@ -1,5 +1,5 @@
 export default class IkiikiFaceDiagnoseAPI {
-    callLoginAPI = async function (ID, password) {
+    async callLoginAPI (ID, password) {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
        
@@ -10,10 +10,10 @@ export default class IkiikiFaceDiagnoseAPI {
             redirect: 'follow'
         };
         const response = await fetch("https://nczxmo91g3.execute-api.ap-northeast-1.amazonaws.com/login", requestOptions);
-        return response;
+        return response.json();
     }
 
-    callFaceDiagnoseAPI = async function (Image, ID) {
+    async callFaceDiagnoseAPI (Image, ID) {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         const requestOptions = {
@@ -23,6 +23,6 @@ export default class IkiikiFaceDiagnoseAPI {
             redirect: 'follow'
         };
         const response = await fetch("https://sdnl1xmao1.execute-api.ap-northeast-1.amazonaws.com/ikiiki-value", requestOptions);
-        return response;
+        return response.json();
     }
 }
