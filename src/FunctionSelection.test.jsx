@@ -5,9 +5,9 @@ import {render} from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import userEvent from "@testing-library/user-event";
 
-
+const VALID_ID = "testuser"
 it("正常系、機能選択画面入力時にIDが表示されているかのテスト",async ()=>{
-    const VALID_ID = "testuser"
+    
 
     act (() => {
         render(<FunctionSelection ID={VALID_ID}/>);
@@ -16,7 +16,6 @@ it("正常系、機能選択画面入力時にIDが表示されているかの�
 });
 
 it("正常系、ログアウトボタンを押したときにログイン画面に戻るかのテスト",async() =>{
-    const VALID_ID = "testuser"
     act (() => {
         render(<FunctionSelection ID={VALID_ID}/>);
     });
@@ -36,8 +35,6 @@ it("正常系、ログアウトボタンを押したときにログイン画面�
 
 
 it("正常系、イキイキ顔診断ボタンを押したときにイキイキ顔診断画面に遷移するかのテスト",async() =>{
-
-    const VALID_ID = "testuser"
     act (() => {
         render(<FunctionSelection ID={VALID_ID}/>);
     });

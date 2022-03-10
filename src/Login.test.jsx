@@ -7,9 +7,10 @@ import { act } from "react-dom/test-utils";
 import UserEvent from "@testing-library/user-event"
 import userEvent from "@testing-library/user-event";
 
+
+jest.mock("./IkiikiFaceDiagnoseAPI");
 const VALID_ID = "testuser";
 const VALID_PASSWORD = "testpassword";
-jest.mock("./IkiikiFaceDiagnoseAPI");
 it("正常系、ID未入力で押した場合APIが実行されないことの確認",async() =>{
     const dummyResponseJson = {
         hasLoginAuthenticated:true,

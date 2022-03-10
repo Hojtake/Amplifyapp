@@ -17,6 +17,7 @@ dummyImageData.id = "getimg";
 const RESULT_MSG = "本日も元気に働きましょう！"
 const IKIIKI_VAL = 70;
 const DATE = "2022/03/01";
+//
 const ERR_MSG = "予期しないエラーが発生しました。しばらく待ってから再度実行してください。"
 
 jest.mock("./IkiikiFaceDiagnoseAPI");
