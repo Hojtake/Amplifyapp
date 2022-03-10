@@ -74,7 +74,7 @@ export default class Diagnosis extends React.Component {
         api.callFaceDiagnoseAPI(image.getAttribute("src"),this.props.ID)
         .then(result =>{
             //result及びresult内部のパラメータがnullまたはundefinedの場合にエラーとして処理を行う
-            if(!result || !result.message){
+            if(!result || !result.message || result.hasFaceDiagnosed === null || result.hasFaceDiagnosed === ""){
                 throw new Error();
                 }
             if(result.hasFaceDiagnosed){
