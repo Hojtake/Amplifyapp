@@ -10,11 +10,12 @@ button.function{
     min-width: 60%;
 
 }
-div.photo_area{
+
+
+div.display{
     clear: both;
     background-color: white;
     text-align: center;
-    
     margin-right: 10px;
     width: 700px;
     height: 400px;
