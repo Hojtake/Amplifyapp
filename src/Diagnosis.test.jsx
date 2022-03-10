@@ -52,40 +52,6 @@ it("正常系、イキイキ顔診断が成功した場合にメッセージが�
     expect(document.querySelector("p[id='resist_day']").innerHTML).toBe(`${DATE}本日のイキイキ度は${IKIIKI_VAL}です。`);
 })
 
-it("異常系、イキイキ顔診断が失敗した場合にメッセージが正しく表示されていることの確認", async () => {
-    const FAILED_RESULT_MSG = "画像ファイルが大きすぎます。5MB以下の画像を選択してください。"
-    const dummyResponseJson
-        = {
-        hasFaceDiagnosed: false,
-        ikiikiValue: 0,
-        date: null,
-        message: FAILED_RESULT_MSG
-    }
-
-    IkiikiFaceDiagnoseAPI.mockImplementation(() => {
-        return {
-            callFaceDiagnoseAPI: () => {
-                return Promise.resolve(dummyResponseJson
-                );
-            }
-        };
-    });
-
-    act(() => {
-        render(<Diagnosis ID={VALID_ID} />);
-    });
-
-    document.getElementById("photo_area").appendChild(dummyImageData);
-    const diagnoseButton = document.querySelector("button[id='diagnose_button']")
-    await act(async () => {
-        userEvent.click(diagnoseButton);
-    });
-
-    expect(document.querySelector("p[id='result_msg']").innerHTML).toBe(FAILED_RESULT_MSG);
-    expect(document.querySelector("p[id='resist_day']").innerHTML).toBe("");
-})
-
-
 it("正常系、画像を選択したときにテスト操作ガイドのメッセージが更新されること", async () => {
     const imagefile = fs.readFileSync("./testImage/sample1.jpeg");
 
@@ -118,6 +84,39 @@ it("正常系、機能選択画面に戻るボタンを押したときにFunctio
     expect(spyRender).toBeCalled();
     spyRender.mockRestore();
 });
+
+it("異常系、イキイキ顔診断が失敗した場合にメッセージが正しく表示されていることの確認", async () => {
+    const FAILED_RESULT_MSG = "画像ファイルが大きすぎます。5MB以下の画像を選択してください。"
+    const dummyResponseJson
+        = {
+        hasFaceDiagnosed: false,
+        ikiikiValue: 0,
+        date: null,
+        message: FAILED_RESULT_MSG
+    }
+
+    IkiikiFaceDiagnoseAPI.mockImplementation(() => {
+        return {
+            callFaceDiagnoseAPI: () => {
+                return Promise.resolve(dummyResponseJson
+                );
+            }
+        };
+    });
+
+    act(() => {
+        render(<Diagnosis ID={VALID_ID} />);
+    });
+
+    document.getElementById("photo_area").appendChild(dummyImageData);
+    const diagnoseButton = document.querySelector("button[id='diagnose_button']")
+    await act(async () => {
+        userEvent.click(diagnoseButton);
+    });
+
+    expect(document.querySelector("p[id='result_msg']").innerHTML).toBe(FAILED_RESULT_MSG);
+    expect(document.querySelector("p[id='resist_day']").innerHTML).toBe("");
+})
 
 it("異常系、レスポンスが正常に返らなかった場合のテスト（レスポンスの中身が空）", async () => {
 
