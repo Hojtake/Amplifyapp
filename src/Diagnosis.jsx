@@ -10,8 +10,11 @@ export default class Diagnosis extends React.Component {
         this.clickReturnToFunctionSelection = this.clickReturnToFunctionSelection.bind(this);
         this.clickDiagnose = this.clickDiagnose.bind(this);
         this.clickImageSelect = this.clickImageSelect.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleClickImageSelect = this.handleClickImageSelect.bind(this);
         this.state={resistDayMessage:null,resultMessage:null,operationMessage:"・画像選択ボタンを押してください",photoimage:"",marginTop:0};
     }
+    
     //画像をアップロードしたときに画像表示領域に画像を表示する関数
     clickImageSelect= (e)=>{
         
@@ -69,14 +72,21 @@ export default class Diagnosis extends React.Component {
     	this.setState({resistDayMessage:null});
     	this.setState({resultMessage:null});
         const image = document.getElementById("getimg");
+        //Base64エンコードによるファイルサイズの増加率を33%としてファイルサイズの上限を決定する
+        const fileSizeUpperLimit = 4*(1+0.33)*1024*1024;
         if(image == null){
             this.setState({resultMessage:"画像を選択してから診断するボタンを押してください。"});
             return ;    
         }
+        if(image.getAttribute("src").length >= fileSizeUpperLimit){
+            console.log(image.getAttribute("src").length);
+            this.setState({resultMessage:"画像ファイルが大きすぎます。4MB以下の画像を選択してください。"});
+            return ;  
+        }
         
         const api = new IkiikiFaceDiagnoseAPI();
         api.callFaceDiagnoseAPI(image.getAttribute("src"),this.props.ID)
-        .then(result =>{
+        .then(result => {
             //result及びresult内部のパラメータがnullまたはundefinedの場合にエラーとして処理を行う
             if(!result || !result.message || result.hasFaceDiagnosed === null || result.hasFaceDiagnosed === ""){
                 throw new Error();
@@ -90,12 +100,20 @@ export default class Diagnosis extends React.Component {
             }else{                     
                 this.setState({resultMessage:result.message});
             }                    
-        }).catch(()=>{
+        }).catch(err =>{
             this.setState({resultMessage:"予期しないエラーが発生しました。しばらく待ってから再度実行してください。"});
         });           
     }
 
-    render(){        
+    handleSubmit = (e) => {
+        e.preventDefault();
+    }
+
+    handleClickImageSelect = ()=>{
+        document.querySelector("input[type='file']").dispatchEvent(new MouseEvent("click",{bubbles:true}));
+    }
+
+    render(){
         return (
             <>
                 <h1>イキイキ顔診断画面</h1>
@@ -106,8 +124,11 @@ export default class Diagnosis extends React.Component {
                 <div style={{marginTop:this.state.marginTop}} id="photo_area">{this.state.photoimage}</div>
                 </div>
                 <div className={classes.button_area}>
-                    <label htmlFor="filename" tabIndex={1} className={classes.label}>画像を選択<input type="file"id="filename" accept=".png,.jpg,.jpeg" onChange={this.clickImageSelect}/></label>    
-                    <button tabIndex={3} className={classes.diagnose_button} onClick={this.clickDiagnose} id="diagnose_button">診断する</button>
+                    <form onSubmit={this.handleSubmit}>
+                        <input type="file"id="filename" className={classes.hidden} accept=".png,.jpg,.jpeg" onChange={this.clickImageSelect}/>
+                        <button type="submit" onClick={this.handleClickImageSelect} tabIndex={2} className={classes.imageSelect}>画像を選択</button>    
+                    </form>
+                        <button tabIndex={3} className={classes.diagnose_button} onClick={this.clickDiagnose} id="diagnose_button">診断する</button>
                 </div>
                 <div className={classes.diagnose_result_area} id="diagnose_result_area">
                     <p id="resist_day">{this.state.resistDayMessage}</p>

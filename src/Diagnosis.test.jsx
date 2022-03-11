@@ -53,17 +53,16 @@ it("正常系、イキイキ顔診断が成功した場合にメッセージが�
 })
 
 it("正常系、画像を選択したときにテスト操作ガイドのメッセージが更新されること", async () => {
-    const imagefile = fs.readFileSync("./testImage/sample1.jpeg");
+    const imageFile = fs.readFileSync("./testImage/sample1.jpeg");
 
-    const inputImage = new File([imagefile], "sample1.jpeg", { type: "image/jpeg", });
+    const inputImage = new File([imageFile], "sample1.jpeg", { type: "image/jpeg", });
     act(() => {
         render(<Diagnosis ID={VALID_ID} />);
     });
     const operationMsg = document.getElementById("operationMsg");
     expect(operationMsg.innerHTML).toBe("・画像選択ボタンを押してください");
-    const inputFile = screen.getByLabelText("画像を選択");
-
-    userEvent.upload(inputFile, inputImage);
+    const inputFile = document.querySelector("input[type='file']");
+    userEvent.upload(inputFile,inputImage);
     expect(inputFile.files[0]).toStrictEqual(inputImage);
     expect(inputFile.files).toHaveLength(1);
     expect(operationMsg.innerHTML).toBe("・診断するボタンを押してください");
@@ -86,7 +85,7 @@ it("正常系、機能選択画面に戻るボタンを押したときにFunctio
 });
 
 it("異常系、イキイキ顔診断が失敗した場合にメッセージが正しく表示されていることの確認", async () => {
-    const FAILED_RESULT_MSG = "画像ファイルが大きすぎます。5MB以下の画像を選択してください。"
+    const FAILED_RESULT_MSG = "画像ファイルが大きすぎます。4MB以下の画像を選択してください。"
     const dummyResponseJson
         = {
         hasFaceDiagnosed: false,
