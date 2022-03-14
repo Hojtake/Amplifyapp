@@ -10,11 +10,12 @@ button.function{
     min-width: 60%;
 
 }
-div.photo_area{
+
+
+div.display{
     clear: both;
     background-color: white;
     text-align: center;
-    
     margin-right: 10px;
     width: 700px;
     height: 400px;
@@ -82,20 +83,16 @@ div.username>p {
     text-decoration: underline;
        
 }
-label > input{
-    display: none;     
-}
-label{
-    display: inline-block;
-    background-color:#EFEFEF;
-    border-color: black;
-    border: 0.5px solid;
-    border-color: black;
+button.imageSelect{
     font-size: 30px;
+    width: 200px;
+    margin-top: 20px;
+    margin-bottom: 10px;
     padding: 7px 20px;
     border-radius: 80px;
     cursor: pointer;
-    }
-label:hover{
-    background-color: #E3E3E3;
 }
+input.hidden{
+    display: none;
+}      
+
