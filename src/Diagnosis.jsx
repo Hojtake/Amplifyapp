@@ -12,7 +12,7 @@ export default class Diagnosis extends React.Component {
         this.clickImageSelect = this.clickImageSelect.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClickImageSelect = this.handleClickImageSelect.bind(this);
-        this.state={resistDayMessage:null,resultMessage:null,operationMessage:"・画像選択ボタンを押してください",photoimage:"",marginTop:0,cursorWait:false};
+        this.state={resistDayMessage:null,resultMessage:null,operationMessage:"・画像選択ボタンを押してください",photoimage:"",marginTop:0,cursorWait:false, disabled:true};
     }
     
     //画像をアップロードしたときに画像表示領域に画像を表示する関数
@@ -52,7 +52,8 @@ export default class Diagnosis extends React.Component {
                 }
                 //画像を画像表示領域内に埋め込む
                 const imgdata = <img src={e.target.result} width={imageWidth} height={imageHeight} id="getimg"/>;
-                this.setState({photoimage:imgdata})
+                this.setState({photoimage:imgdata});
+                this.setState({disabled:false});
                 if(imageHeight<700){
                     this.setState({marginTop:(windowHeight-imageHeight)/2})
                 }
@@ -72,6 +73,7 @@ export default class Diagnosis extends React.Component {
         this.setState({cursorWait:true});
     	this.setState({resistDayMessage:null});
     	this.setState({resultMessage:null});
+        this.setState({disabled:true});
         const image = document.getElementById("getimg");
         //Base64エンコードによるファイルサイズの増加率を33%としてファイルサイズの上限を決定する
         const fileSizeUpperLimit = 4*(1+0.33)*1024*1024;
@@ -81,7 +83,7 @@ export default class Diagnosis extends React.Component {
             return ;    
         }
         if(image.getAttribute("src").length >= fileSizeUpperLimit){
-            console.log(image.getAttribute("src").length);
+            
             this.setState({resultMessage:"画像ファイルが大きすぎます。4MB以下の画像を選択してください。"});
             this.setState({cursorWait:false});
             return ;  
@@ -101,14 +103,10 @@ export default class Diagnosis extends React.Component {
                 this.setState({resistDayMessage:`${result.date}本日のイキイキ度は${result.ikiikiValue}です。`});
                 this.setState({resultMessage:`${result.message}`});
                 this.setState({cursorWait:false});
-                if(this.props.ikiikiResults == null){
-
-                    this.props.ikiikiResults = [];
-                }
                 const ikiikiResult = {diagnosedDate:result.date,ikiikiValue:result.ikiikiValue};
                 this.props.ikiikiResults.pop();
                 this.props.ikiikiResults.unshift(ikiikiResult);
-                console.log(this.props.ikiikiResults);
+                
             }else{                     
                 this.setState({resultMessage:result.message});
                 this.setState({cursorWait:false});
@@ -133,7 +131,6 @@ export default class Diagnosis extends React.Component {
         }else{
             document.body.style.cursor = "auto";
         }
-        
         return (
             <>
                 <h1>イキイキ顔診断画面</h1>
@@ -148,7 +145,7 @@ export default class Diagnosis extends React.Component {
                         <input type="file"id="filename" className={classes.hidden} accept=".png,.jpg,.jpeg" onChange={this.clickImageSelect}/>
                         <button type="submit" onClick={this.handleClickImageSelect} tabIndex={2} className={classes.imageSelect}>画像を選択</button>    
                     </form>
-                        <button tabIndex={3} className={classes.diagnose_button} onClick={this.clickDiagnose} id="diagnose_button">診断する</button>
+                        <button tabIndex={3} className={classes.diagnose_button} onClick={this.clickDiagnose} id="diagnose_button" disabled={this.state.disabled}>診断する</button>
                 </div>
                 <div className={classes.diagnose_result_area} id="diagnose_result_area">
                     <p id="resist_day">{this.state.resistDayMessage}</p>

@@ -11,17 +11,17 @@ export default class Login extends React.Component {
         this.clickLogin = this.clickLogin.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChangePassWord = this.handleChangePassWord.bind(this);
-        this.state = { message: "", ID: "", password: "",cursorWait:false }
+        this.state = { message: "", ID: "", password: "",cursorWait:false ,disabled:false}
     }
 
     clickLogin = () => {
         this.setState({cursorWait:true});
-        
+        this.setState({disabled:true});
         let hasReadIkiikiResult = false;
         let ikiikiResults = null;
-        let resultMessage = null;
         if (String(this.state.password).match(/[A-Za-z0-9]+/) == null || String(this.state.ID).match(/[A-Za-z0-9]+/) == null) {
-            this.setState({cursoleWait:false});
+            this.setState({cursorWait:false});
+            this.setState({disabled:false});
             return;
         }
         const api = new IkiikiFaceDiagnoseAPI();
@@ -46,6 +46,7 @@ export default class Login extends React.Component {
                         
                     }).finally(()=>{
                         this.setState({cursorWait:false});
+                        this.setState({disabled:false});
                         ReactDOM.render(<FunctionSelection ID={this.state.ID} ikiikiResults={ikiikiResults} hasReadData={hasReadIkiikiResult}/>,document.getElementById("root"));
                     })
                 } else {
@@ -53,11 +54,14 @@ export default class Login extends React.Component {
                         throw new Error();
                     }
                     this.setState({cursorWait:false});
+                    this.setState({disabled:false});
                     this.setState({ message: result.message });
                 }
             }).catch(() => {
-                this.setState({ message: "予期しないエラーが発生しました。しばらく待ってから再度実行してください。" });
                 this.setState({cursorWait:false});
+                this.setState({disabled:false});
+                this.setState({ message: "予期しないエラーが発生しました。しばらく待ってから再度実行してください。" });
+
             });
     }
 
@@ -88,7 +92,7 @@ export default class Login extends React.Component {
                         <input type="text" className={classes.box1} placeholder="ID" id="ID" pattern="^[0-9a-zA-Z]+$" title="半角英数字のみ入力してください" required value={this.state.ID} onChange={this.handleChangeID}></input><br />
                         パスワード<br />
                         <input type="password" className={classes.box2} placeholder="Password" id="password" pattern="^[0-9a-zA-Z]+$" title="半角英数字のみ入力してください" required value={this.state.password} onChange={this.handleChangePassWord}></input>
-                        <button type="submit" onClick={this.clickLogin}>ログイン</button>
+                        <button type="submit" onClick={this.clickLogin} disabled={this.state.disabled}>ログイン</button>
                         <div className={classes.errMessage} id="errMsg">
                             <p>{this.state.message}</p>
                         </div>
