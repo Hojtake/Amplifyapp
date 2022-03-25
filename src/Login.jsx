@@ -35,10 +35,13 @@ export default class Login extends React.Component {
                 if (result.hasLoginAuthenticated && result.ID) {
                     api.readIkiikiResultAPI(result.ID).then(result=>{
 
-                        if(result.hasReadikiikiResult){
-                            ikiikiResults = result.ikiikiResults;
-                            resultMessage = result.message;
-                            hasReadIkiikiResult = result.hasReadikiikiResult;
+                        if(result.hasReadIkiikiResult){
+                            if(result.ikiikiResults == null){
+                                ikiikiResults = [];
+                            }else{
+                                ikiikiResults = result.ikiikiResults;
+                            }
+                            hasReadIkiikiResult = result.hasReadIkiikiResult;
                         }
                         
                     }).finally(()=>{

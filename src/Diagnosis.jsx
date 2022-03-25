@@ -101,9 +101,14 @@ export default class Diagnosis extends React.Component {
                 this.setState({resistDayMessage:`${result.date}本日のイキイキ度は${result.ikiikiValue}です。`});
                 this.setState({resultMessage:`${result.message}`});
                 this.setState({cursorWait:false});
-                const ikiikiResult = {date:result.date,ikiiki_value:result.ikiikiValue};
-                this.props.ikiikiResults.unshift(ikiikiResult);
+                if(this.props.ikiikiResults == null){
+
+                    this.props.ikiikiResults = [];
+                }
+                const ikiikiResult = {diagnosedDate:result.date,ikiikiValue:result.ikiikiValue};
                 this.props.ikiikiResults.pop();
+                this.props.ikiikiResults.unshift(ikiikiResult);
+                console.log(this.props.ikiikiResults);
             }else{                     
                 this.setState({resultMessage:result.message});
                 this.setState({cursorWait:false});

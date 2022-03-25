@@ -46,3 +46,6 @@ div.table_area{
 div.table{
     margin-top: 50px;
 }
+p.error_message{
+    color: red;
+}

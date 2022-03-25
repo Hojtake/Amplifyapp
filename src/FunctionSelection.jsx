@@ -26,21 +26,22 @@ export default class FunctionSelection extends React.Component{
                 for(let i=0;i <this.props.ikiikiResults.length;i++){
                     let styleData;
                     let diagnosedData = this.props.ikiikiResults[i];
-                    if(diagnosedData["ikiiki_value"]<50){
+                    if(diagnosedData["ikiikiValue"]<50){
                         styleData="rgb(255, 125, 125)";
                     }else{
                         styleData="transparent";
                     }
-                    ikiikiData.push(<tr key={i} style={{backgroundColor:styleData}}><td>{diagnosedData["date"]}</td><td>{diagnosedData["ikiiki_value"]}</td></tr>);
+                    ikiikiData.push(<tr key={i} style={{backgroundColor:styleData}}><td>{diagnosedData["diagnosedDate"]}</td><td>{diagnosedData["ikiikiValue"]}</td></tr>);
                 
                 }
             }else{
-                errMsg = "まだイキイキ度が登録されていません。";
+                noDataMsg = "まだイキイキ度が登録されていません。";
             }
         }
         return(
             <>
                 <h1>機能選択画面</h1>
+                <p className={classes.error_message}>{errMsg}</p>
                 <div className={classes.username}><p>ID:{this.props.ID}</p></div>
                 <div className={classes.logout_button}><button onClick={this.clickLogout} id="logout">ログアウト</button></div>
                 <div className={classes.function_area}>
@@ -51,12 +52,14 @@ export default class FunctionSelection extends React.Component{
                 <p>{this.props.ID}さんの過去のイキイキ度の記録</p>
                 <p>{noDataMsg}</p>
                     <table border="2" width="650">
+                    
                     <thead>
                     <tr>
                         <th width="50%">登録日</th>
                         <th>イキイキ度</th>
                     </tr>
                     </thead>
+                    
                     <tbody>{ikiikiData}</tbody>
                     </table></div>
                     </div>
