@@ -86,7 +86,8 @@ export default class Login extends React.Component {
         return (
             <>
                 <h1>イキイキ顔診断　ログイン画面</h1>
-                <div className={classes.main}>
+                
+                <div className={classes.main} style={{alignSelf: "center"}}>
                     <form onSubmit={this.handleSubmit}>
                         ID<br />
                         <input type="text" className={classes.box1} placeholder="ID" id="ID" pattern="^[0-9a-zA-Z]+$" title="半角英数字のみ入力してください" required value={this.state.ID} onChange={this.handleChangeID}></input><br />
@@ -98,6 +99,7 @@ export default class Login extends React.Component {
                         </div>
                     </form>
                 </div>
+                
             </>
         )
     }
