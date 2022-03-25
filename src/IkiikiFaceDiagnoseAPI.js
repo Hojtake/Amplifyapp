@@ -26,4 +26,17 @@ export default class IkiikiFaceDiagnoseAPI {
         const response = await fetch("https://sdnl1xmao1.execute-api.ap-northeast-1.amazonaws.com/ikiiki-value", requestOptions);
         return response.json();
     }
+
+    async readIkiikiResultAPI (ID) {
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: JSON.stringify({"ID": ID }),
+            redirect: 'follow'
+        };
+        const response = await fetch("https://8dmfwkbu6b.execute-api.ap-northeast-1.amazonaws.com/ikiikiResult", requestOptions);
+        return response.json();
+    }
 }

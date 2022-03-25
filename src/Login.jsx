@@ -11,13 +11,17 @@ export default class Login extends React.Component {
         this.clickLogin = this.clickLogin.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChangePassWord = this.handleChangePassWord.bind(this);
-        this.state = { message: "", ID: "", password: "" }
+        this.state = { message: "", ID: "", password: "",cursorWait:false }
     }
 
     clickLogin = () => {
-
+        this.setState({cursorWait:true});
+        
+        let hasReadIkiikiResult = false;
+        let ikiikiResults = null;
+        let resultMessage = null;
         if (String(this.state.password).match(/[A-Za-z0-9]+/) == null || String(this.state.ID).match(/[A-Za-z0-9]+/) == null) {
-
+            this.setState({cursoleWait:false});
             return;
         }
         const api = new IkiikiFaceDiagnoseAPI();
@@ -29,16 +33,28 @@ export default class Login extends React.Component {
                     throw new Error();
                 }
                 if (result.hasLoginAuthenticated && result.ID) {
+                    api.readIkiikiResultAPI(result.ID).then(result=>{
 
-                    ReactDOM.render(<FunctionSelection ID={result.ID} />, document.getElementById("root"));
+                        if(result.hasReadikiikiResult){
+                            ikiikiResults = result.ikiikiResults;
+                            resultMessage = result.message;
+                            hasReadIkiikiResult = result.hasReadikiikiResult;
+                        }
+                        
+                    }).finally(()=>{
+                        this.setState({cursorWait:false});
+                        ReactDOM.render(<FunctionSelection ID={this.state.ID} ikiikiResults={ikiikiResults} hasReadData={hasReadIkiikiResult}/>,document.getElementById("root"));
+                    })
                 } else {
                     if (!result.message) {
                         throw new Error();
                     }
+                    this.setState({cursorWait:false});
                     this.setState({ message: result.message });
                 }
             }).catch(() => {
                 this.setState({ message: "予期しないエラーが発生しました。しばらく待ってから再度実行してください。" });
+                this.setState({cursorWait:false});
             });
     }
 
@@ -55,6 +71,11 @@ export default class Login extends React.Component {
     }
 
     render() {
+        if(this.state.cursorWait){
+            document.body.style.cursor = "wait";
+        }else{
+            document.body.style.cursor = "auto";
+        }
         return (
             <>
                 <h1>イキイキ顔診断　ログイン画面</h1>

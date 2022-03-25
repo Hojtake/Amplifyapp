@@ -14,10 +14,30 @@ export default class FunctionSelection extends React.Component{
         ReactDOM.render(<Login/>,document.getElementById("root"));
     }
     clickIkiikiDiagnoseFace = () => {
-        ReactDOM.render(<Diagnosis ID={this.props.ID}/>,document.getElementById("root"));
+        ReactDOM.render(<Diagnosis ID={this.props.ID} ikiikiResults={this.props.ikiikiResults}/>,document.getElementById("root"));
     }
 
     render(){
+        let errMsg=null;
+        let ikiikiData=[]; 
+        let noDataMsg= null
+        if(this.props.hasReadData){
+            if(this.props.ikiikiResults.length > 0){
+                for(let i=0;i <this.props.ikiikiResults.length;i++){
+                    let styleData;
+                    let diagnosedData = this.props.ikiikiResults[i];
+                    if(diagnosedData["ikiiki_value"]<50){
+                        styleData="rgb(255, 125, 125)";
+                    }else{
+                        styleData="transparent";
+                    }
+                    ikiikiData.push(<tr key={i} style={{backgroundColor:styleData}}><td>{diagnosedData["date"]}</td><td>{diagnosedData["ikiiki_value"]}</td></tr>);
+                
+                }
+            }else{
+                errMsg = "まだイキイキ度が登録されていません。";
+            }
+        }
         return(
             <>
                 <h1>機能選択画面</h1>
@@ -26,6 +46,20 @@ export default class FunctionSelection extends React.Component{
                 <div className={classes.function_area}>
                 <button className={classes.function} onClick={this.clickIkiikiDiagnoseFace} id="diagnoseFace">イキイキ顔診断</button>
                 </div>
+                <div className={classes.table}>
+                <div className={classes.table_area}>
+                <p>{this.props.ID}さんの過去のイキイキ度の記録</p>
+                <p>{noDataMsg}</p>
+                    <table border="2" width="650">
+                    <thead>
+                    <tr>
+                        <th width="50%">登録日</th>
+                        <th>イキイキ度</th>
+                    </tr>
+                    </thead>
+                    <tbody>{ikiikiData}</tbody>
+                    </table></div>
+                    </div>
             </>
         )
     }

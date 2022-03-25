@@ -33,3 +33,16 @@ div.username>p {
     text-decoration: underline;
        
 }
+div.table_area{
+    margin: 0 auto;
+    
+    width: 670px;
+    height: 200px;
+    text-align: center;
+    align-items: center;
+    overflow-y: scroll;
+    background-color: rgb(240, 248, 255);
+}
+div.table{
+    margin-top: 50px;
+}

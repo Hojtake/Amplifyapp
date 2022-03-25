@@ -12,7 +12,7 @@ export default class Diagnosis extends React.Component {
         this.clickImageSelect = this.clickImageSelect.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClickImageSelect = this.handleClickImageSelect.bind(this);
-        this.state={resistDayMessage:null,resultMessage:null,operationMessage:"・画像選択ボタンを押してください",photoimage:"",marginTop:0};
+        this.state={resistDayMessage:null,resultMessage:null,operationMessage:"・画像選択ボタンを押してください",photoimage:"",marginTop:0,cursorWait:false};
     }
     
     //画像をアップロードしたときに画像表示領域に画像を表示する関数
@@ -65,10 +65,11 @@ export default class Diagnosis extends React.Component {
     }
 
     clickReturnToFunctionSelection = ()=>{
-        ReactDOM.render(<FunctionSelection ID={this.props.ID}/>,document.getElementById("root"));
+        ReactDOM.render(<FunctionSelection ID={this.props.ID} ikiikiResults={this.props.ikiikiResults} hasReadData={true}/>,document.getElementById("root"));
     }
 
     clickDiagnose = ()=>{
+        this.setState({cursorWait:true});
     	this.setState({resistDayMessage:null});
     	this.setState({resultMessage:null});
         const image = document.getElementById("getimg");
@@ -76,11 +77,13 @@ export default class Diagnosis extends React.Component {
         const fileSizeUpperLimit = 4*(1+0.33)*1024*1024;
         if(image == null){
             this.setState({resultMessage:"画像を選択してから診断するボタンを押してください。"});
+            this.setState({cursorWait:false});
             return ;    
         }
         if(image.getAttribute("src").length >= fileSizeUpperLimit){
             console.log(image.getAttribute("src").length);
             this.setState({resultMessage:"画像ファイルが大きすぎます。4MB以下の画像を選択してください。"});
+            this.setState({cursorWait:false});
             return ;  
         }
         
@@ -97,11 +100,17 @@ export default class Diagnosis extends React.Component {
                 }
                 this.setState({resistDayMessage:`${result.date}本日のイキイキ度は${result.ikiikiValue}です。`});
                 this.setState({resultMessage:`${result.message}`});
+                this.setState({cursorWait:false});
+                const ikiikiResult = {date:result.date,ikiiki_value:result.ikiikiValue};
+                this.props.ikiikiResults.unshift(ikiikiResult);
+                this.props.ikiikiResults.pop();
             }else{                     
                 this.setState({resultMessage:result.message});
+                this.setState({cursorWait:false});
             }                    
         }).catch(err =>{
             this.setState({resultMessage:"予期しないエラーが発生しました。しばらく待ってから再度実行してください。"});
+            this.setState({cursorWait:false});
         });           
     }
 
@@ -114,6 +123,12 @@ export default class Diagnosis extends React.Component {
     }
 
     render(){
+        if(this.state.cursorWait){
+            document.body.style.cursor = "wait";
+        }else{
+            document.body.style.cursor = "auto";
+        }
+        
         return (
             <>
                 <h1>イキイキ顔診断画面</h1>
