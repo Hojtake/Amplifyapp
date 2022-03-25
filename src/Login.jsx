@@ -92,7 +92,7 @@ export default class Login extends React.Component {
                         <input type="text" className={classes.box1} placeholder="ID" id="ID" pattern="^[0-9a-zA-Z]+$" title="半角英数字のみ入力してください" required value={this.state.ID} onChange={this.handleChangeID}></input><br />
                         パスワード<br />
                         <input type="password" className={classes.box2} placeholder="Password" id="password" pattern="^[0-9a-zA-Z]+$" title="半角英数字のみ入力してください" required value={this.state.password} onChange={this.handleChangePassWord}></input>
-                        <button type="submit" onClick={this.clickLogin} disabled={this.state.disabled}>ログイン</button>
+                        <br/><button type="submit" onClick={this.clickLogin} disabled={this.state.disabled}>ログイン</button>
                         <div className={classes.errMessage} id="errMsg">
                             <p>{this.state.message}</p>
                         </div>

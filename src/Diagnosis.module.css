@@ -74,6 +74,11 @@ button.diagnose_button{
     border-radius: 80px;
     cursor: pointer;
 }
+button:disabled{
+    color: whitesmoke;
+    background-color: rgb(130, 130, 202);
+    cursor: auto;
+}
 div.username{
     margin: 0px;
     text-align: right;
