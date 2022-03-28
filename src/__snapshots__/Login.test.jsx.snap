@@ -1,0 +1,364 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`正常系、ログイン認証成功時に機能選択画面に遷移するかの確認 1`] = `
+Array [
+  <h1>
+    機能選択画面
+  </h1>,
+  <p
+    className="error_message"
+  />,
+  <div
+    className="username"
+  >
+    <p>
+      ID:
+      testuser
+    </p>
+  </div>,
+  <div
+    className="logout_button"
+  >
+    <button
+      id="logout"
+      onClick={[Function]}
+    >
+      ログアウト
+    </button>
+  </div>,
+  <div
+    className="function_area"
+  >
+    <button
+      className="function"
+      id="diagnoseFace"
+      onClick={[Function]}
+    >
+      イキイキ顔診断
+    </button>
+  </div>,
+  <div
+    className="table"
+  >
+    <div
+      className="table_area"
+    >
+      <p>
+        testuser
+        さんの過去のイキイキ度の記録
+      </p>
+      <p />
+      <table
+        border="2"
+        width="650"
+      >
+        <thead>
+          <tr>
+            <th
+              width="50%"
+            >
+              登録日
+            </th>
+            <th>
+              イキイキ度
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            style={
+              Object {
+                "backgroundColor": "transparent",
+              }
+            }
+          >
+            <td />
+            <td>
+              70
+            </td>
+          </tr>
+          <tr
+            style={
+              Object {
+                "backgroundColor": "transparent",
+              }
+            }
+          >
+            <td />
+            <td>
+              50
+            </td>
+          </tr>
+          <tr
+            style={
+              Object {
+                "backgroundColor": "transparent",
+              }
+            }
+          >
+            <td />
+            <td>
+              60
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>,
+]
+`;
+
+exports[`正常系、過去のデータが存在しない状態でログイン認証成功時に機能選択画面に遷移するかの確認 1`] = `
+Array [
+  <h1>
+    機能選択画面
+  </h1>,
+  <p
+    className="error_message"
+  />,
+  <div
+    className="username"
+  >
+    <p>
+      ID:
+      testuser
+    </p>
+  </div>,
+  <div
+    className="logout_button"
+  >
+    <button
+      id="logout"
+      onClick={[Function]}
+    >
+      ログアウト
+    </button>
+  </div>,
+  <div
+    className="function_area"
+  >
+    <button
+      className="function"
+      id="diagnoseFace"
+      onClick={[Function]}
+    >
+      イキイキ顔診断
+    </button>
+  </div>,
+  <div
+    className="table"
+  >
+    <div
+      className="table_area"
+    >
+      <p>
+        testuser
+        さんの過去のイキイキ度の記録
+      </p>
+      <p>
+        まだイキイキ度が登録されていません。
+      </p>
+      <table
+        border="2"
+        width="650"
+      >
+        <thead>
+          <tr>
+            <th
+              width="50%"
+            >
+              登録日
+            </th>
+            <th>
+              イキイキ度
+            </th>
+          </tr>
+        </thead>
+        <tbody />
+      </table>
+    </div>
+  </div>,
+]
+`;
+
+exports[`正常系、過去の診断結果が存在する状態でログイン認証成功時に機能選択画面に遷移するかの確認 1`] = `
+Array [
+  <h1>
+    機能選択画面
+  </h1>,
+  <p
+    className="error_message"
+  />,
+  <div
+    className="username"
+  >
+    <p>
+      ID:
+      testuser
+    </p>
+  </div>,
+  <div
+    className="logout_button"
+  >
+    <button
+      id="logout"
+      onClick={[Function]}
+    >
+      ログアウト
+    </button>
+  </div>,
+  <div
+    className="function_area"
+  >
+    <button
+      className="function"
+      id="diagnoseFace"
+      onClick={[Function]}
+    >
+      イキイキ顔診断
+    </button>
+  </div>,
+  <div
+    className="table"
+  >
+    <div
+      className="table_area"
+    >
+      <p>
+        testuser
+        さんの過去のイキイキ度の記録
+      </p>
+      <p />
+      <table
+        border="2"
+        width="650"
+      >
+        <thead>
+          <tr>
+            <th
+              width="50%"
+            >
+              登録日
+            </th>
+            <th>
+              イキイキ度
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            style={
+              Object {
+                "backgroundColor": "transparent",
+              }
+            }
+          >
+            <td />
+            <td>
+              70
+            </td>
+          </tr>
+          <tr
+            style={
+              Object {
+                "backgroundColor": "transparent",
+              }
+            }
+          >
+            <td />
+            <td>
+              50
+            </td>
+          </tr>
+          <tr
+            style={
+              Object {
+                "backgroundColor": "transparent",
+              }
+            }
+          >
+            <td />
+            <td>
+              60
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>,
+]
+`;
+
+exports[`異常系、過去のデータ参照に失敗した状態でログイン認証成功時に機能選択画面に遷移するかの確認 1`] = `
+Array [
+  <h1>
+    機能選択画面
+  </h1>,
+  <p
+    className="error_message"
+  >
+    過去のデータの読み込みに失敗しました。
+過去の記録を閲覧したい場合は一度ログアウトして再度ログインしてください。
+  </p>,
+  <div
+    className="username"
+  >
+    <p>
+      ID:
+      testuser
+    </p>
+  </div>,
+  <div
+    className="logout_button"
+  >
+    <button
+      id="logout"
+      onClick={[Function]}
+    >
+      ログアウト
+    </button>
+  </div>,
+  <div
+    className="function_area"
+  >
+    <button
+      className="function"
+      id="diagnoseFace"
+      onClick={[Function]}
+    >
+      イキイキ顔診断
+    </button>
+  </div>,
+  <div
+    className="table"
+  >
+    <div
+      className="table_area"
+    >
+      <p>
+        testuser
+        さんの過去のイキイキ度の記録
+      </p>
+      <p />
+      <table
+        border="2"
+        width="650"
+      >
+        <thead>
+          <tr>
+            <th
+              width="50%"
+            >
+              登録日
+            </th>
+            <th>
+              イキイキ度
+            </th>
+          </tr>
+        </thead>
+        <tbody />
+      </table>
+    </div>
+  </div>,
+]
+`;

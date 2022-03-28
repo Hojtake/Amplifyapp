@@ -42,7 +42,7 @@ export default class FunctionSelection extends React.Component{
         return(
             <>
                 <h1>機能選択画面</h1>
-                <p className={classes.error_message}>{errMsg}</p>
+                <p className={classes.error_message} id="error_message">{errMsg}</p>
                 <div className={classes.username}><p>ID:{this.props.ID}</p></div>
                 <div className={classes.logout_button}><button onClick={this.clickLogout} id="logout">ログアウト</button></div>
                 <div className={classes.function_area}>
@@ -50,8 +50,8 @@ export default class FunctionSelection extends React.Component{
                 </div>
                 <div className={classes.table}>
                 <div className={classes.table_area}>
-                <p>{this.props.ID}さんの過去のイキイキ度の記録</p>
-                <p>{noDataMsg}</p>
+                <p id="table_title">{this.props.ID}さんの過去のイキイキ度の記録</p>
+                <p id="nodata_message">{noDataMsg}</p>
                     <table border="2" width="650">
                     <thead>
                     <tr>
