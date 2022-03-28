@@ -1,5 +1,5 @@
 
-import React, { useCallback } from "react";
+import React from "react";
 import FunctionSelection  from "./FunctionSelection.jsx";
 import IkiikiFaceDiagnoseAPI from "./IkiikiFaceDiagnoseAPI";
 import classes from "./Diagnosis.module.css";

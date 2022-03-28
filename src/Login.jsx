@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import FunctionSelection from "./FunctionSelection";
 import IkiikiFaceDiagnoseAPI from "./IkiikiFaceDiagnoseAPI";
 import classes from "./Login.module.css";

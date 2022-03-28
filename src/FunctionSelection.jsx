@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import Diagnosis from "./Diagnosis";
 import Login from "./Login";
 import classes from"./FunctionSelection.module.css";

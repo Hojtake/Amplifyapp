@@ -25,6 +25,7 @@ export default class APP extends React.Component{
     setHasReadIkiikiResult(result){
         this.setState({hasReadIkiikiResult: result});
     }
+
     setIkiikiResults(ikiikiResults){
         this.setState({ikiikiResults:ikiikiResults})
     }
