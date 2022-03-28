@@ -1,6 +1,5 @@
 
-import React from "react";
-import ReactDOM from "react-dom";
+import React, { useCallback } from "react";
 import FunctionSelection  from "./FunctionSelection.jsx";
 import IkiikiFaceDiagnoseAPI from "./IkiikiFaceDiagnoseAPI";
 import classes from "./Diagnosis.module.css";
@@ -12,7 +11,11 @@ export default class Diagnosis extends React.Component {
         this.clickImageSelect = this.clickImageSelect.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClickImageSelect = this.handleClickImageSelect.bind(this);
-        this.state={resistDayMessage:null,resultMessage:null,operationMessage:"・画像選択ボタンを押してください",photoimage:"",marginTop:0,cursorWait:false, disabled:true};
+        this.state={resistDayMessage:null,resultMessage:null,operationMessage:"・画像選択ボタンを押してください",photoimage:"",marginTop:0,cursorWait:false, disabled:true,
+            callback:this.props.callback,
+            setIkiikiResults:this.props.setIkiikiResults
+
+        };
     }
     
     //画像をアップロードしたときに画像表示領域に画像を表示する関数
@@ -66,7 +69,7 @@ export default class Diagnosis extends React.Component {
     }
 
     clickReturnToFunctionSelection = ()=>{
-        ReactDOM.render(<FunctionSelection ID={this.props.ID} ikiikiResults={this.props.ikiikiResults} hasReadData={true}/>,document.getElementById("root"));
+       this.state.callback(FunctionSelection.name);
     }
 
     clickDiagnose = ()=>{
@@ -106,6 +109,7 @@ export default class Diagnosis extends React.Component {
                 const ikiikiResult = {diagnosedDate:result.date,ikiikiValue:result.ikiikiValue};
                 this.props.ikiikiResults.pop();
                 this.props.ikiikiResults.unshift(ikiikiResult);
+                this.state.setIkiikiResults(this.props.ikiikiResults);
                 
             }else{                     
                 this.setState({resultMessage:result.message});

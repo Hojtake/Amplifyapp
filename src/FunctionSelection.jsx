@@ -9,19 +9,20 @@ export default class FunctionSelection extends React.Component{
         super(props);
         this.clickLogout = this.clickLogout.bind(this);
         this.clickIkiikiDiagnoseFace = this.clickIkiikiDiagnoseFace.bind(this);
+        this.state= {callback:this.props.callback}
     }
     clickLogout = () =>{
-        ReactDOM.render(<Login/>,document.getElementById("root"));
+        this.state.callback(Login.name)
     }
     clickIkiikiDiagnoseFace = () => {
-        ReactDOM.render(<Diagnosis ID={this.props.ID} ikiikiResults={this.props.ikiikiResults}/>,document.getElementById("root"));
+       this.state.callback(Diagnosis.name)
     }
 
     render(){
         let errMsg=null;
         let ikiikiData=[]; 
         let noDataMsg= null
-        if(this.props.hasReadData){
+        if(this.props.hasReadIkiikiResult){
             if(this.props.ikiikiResults.length > 0){
                 for(let i=0;i <this.props.ikiikiResults.length;i++){
                     let styleData;
@@ -32,11 +33,12 @@ export default class FunctionSelection extends React.Component{
                         styleData="transparent";
                     }
                     ikiikiData.push(<tr key={i} style={{backgroundColor:styleData}}><td>{diagnosedData["diagnosedDate"]}</td><td>{diagnosedData["ikiikiValue"]}</td></tr>);
-                
                 }
             }else{
                 noDataMsg = "まだイキイキ度が登録されていません。";
             }
+        }else{
+            errMsg = "過去のデータの読み込みに失敗しました。\n過去の記録を閲覧したい場合は一度ログアウトして再度ログインしてください。";
         }
         return(
             <>
@@ -52,14 +54,12 @@ export default class FunctionSelection extends React.Component{
                 <p>{this.props.ID}さんの過去のイキイキ度の記録</p>
                 <p>{noDataMsg}</p>
                     <table border="2" width="650">
-                    
                     <thead>
                     <tr>
                         <th width="50%">登録日</th>
                         <th>イキイキ度</th>
                     </tr>
                     </thead>
-                    
                     <tbody>{ikiikiData}</tbody>
                     </table></div>
                     </div>

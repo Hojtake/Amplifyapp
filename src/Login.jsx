@@ -11,14 +11,19 @@ export default class Login extends React.Component {
         this.clickLogin = this.clickLogin.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChangePassWord = this.handleChangePassWord.bind(this);
-        this.state = { message: "", ID: "", password: "",cursorWait:false ,disabled:false}
+        this.state = { 
+            message: "", ID: "", password: "",cursorWait:false ,disabled:false ,
+            callback:this.props.callback, 
+            setIkiikiResults: this.props.setIkiikiResults, 
+            setID:this.props.setID, 
+            setHasReadIkiikiResult:this.props.setHasReadIkiikiResult
+        }
     }
 
     clickLogin = () => {
+        
         this.setState({cursorWait:true});
         this.setState({disabled:true});
-        let hasReadIkiikiResult = false;
-        let ikiikiResults = null;
         if (String(this.state.password).match(/[A-Za-z0-9]+/) == null || String(this.state.ID).match(/[A-Za-z0-9]+/) == null) {
             this.setState({cursorWait:false});
             this.setState({disabled:false});
@@ -34,20 +39,20 @@ export default class Login extends React.Component {
                 }
                 if (result.hasLoginAuthenticated && result.ID) {
                     api.readIkiikiResultAPI(result.ID).then(result=>{
-
+                        
                         if(result.hasReadIkiikiResult){
                             if(result.ikiikiResults == null){
-                                ikiikiResults = [];
+                                this.state.setIkiikiResults([]);
                             }else{
-                                ikiikiResults = result.ikiikiResults;
-                            }
-                            hasReadIkiikiResult = result.hasReadIkiikiResult;
+                                this.state.setIkiikiResults(result.ikiikiResults);
+                            }  
                         }
-                        
+                        this.state.setHasReadIkiikiResult(true);
                     }).finally(()=>{
                         this.setState({cursorWait:false});
                         this.setState({disabled:false});
-                        ReactDOM.render(<FunctionSelection ID={this.state.ID} ikiikiResults={ikiikiResults} hasReadData={hasReadIkiikiResult}/>,document.getElementById("root"));
+                        this.state.setID(this.state.ID);
+                        this.state.callback(FunctionSelection.name);
                     })
                 } else {
                     if (!result.message) {
