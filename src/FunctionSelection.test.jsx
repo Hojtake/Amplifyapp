@@ -19,6 +19,8 @@ it("正常系、過去の診断結果が存在する場合テーブルが作成�
         hasReadIkiikiResult={true}
         />
     )
+    const table = document.querySelector("table");
+    console.log(table.innerHTML);
 
 });
 
