@@ -36,9 +36,9 @@ export default class APP extends React.Component{
                 <>   
                     <Login 
                     callback={this.selectComponent} 
-                    setID = {this.setID}
-                    setIkiikiResults = {this.setIkiikiResults}
-                    setHasReadIkiikiResult = {this.setHasReadIkiikiResult} />
+                    setID={this.setID}
+                    setIkiikiResults={this.setIkiikiResults}
+                    setHasReadIkiikiResult={this.setHasReadIkiikiResult} />
                 </>
             );
         }else if(this.state.renderComponent == FunctionSelection.name){
@@ -58,7 +58,7 @@ export default class APP extends React.Component{
                     <Diagnosis 
                     callback={this.selectComponent} 
                     ID={this.state.ID}
-                    setIkiikiResults = {this.setIkiikiResults}
+                    setIkiikiResults={this.setIkiikiResults}
                     ikiikiResults={this.state.ikiikiResults}/>
                 </>
             );
