@@ -11,7 +11,7 @@ export default class Diagnosis extends React.Component {
         this.clickImageSelect = this.clickImageSelect.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClickImageSelect = this.handleClickImageSelect.bind(this);
-        this.state={resistDayMessage:null,resultMessage:null,operationMessage:"・画像選択ボタンを押してください",photoimage:"",marginTop:0,cursorWait:false, disabled:true,
+        this.state={resistDayMessage:null,resultMessage:null,operationMessage:"・画像選択ボタンを押してください",photoimage:"",marginTop:0,cursorWait:false, disabled:false,
             callback:this.props.callback,
             setIkiikiResults:this.props.setIkiikiResults
 
@@ -80,11 +80,13 @@ export default class Diagnosis extends React.Component {
         const image = document.getElementById("getimg");
         //Base64エンコードによるファイルサイズの増加率を33%としてファイルサイズの上限を決定する
         const fileSizeUpperLimit = 4*(1+0.33)*1024*1024;
+
         if(image == null){
             this.setState({resultMessage:"画像を選択してから診断するボタンを押してください。"});
             this.setState({cursorWait:false});
             return ;    
         }
+        
         if(image.getAttribute("src").length >= fileSizeUpperLimit){
             
             this.setState({resultMessage:"画像ファイルが大きすぎます。4MB以下の画像を選択してください。"});

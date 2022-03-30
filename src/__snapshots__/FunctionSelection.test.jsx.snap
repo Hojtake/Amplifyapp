@@ -1,0 +1,255 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`正常系、イキイキ顔診断ボタンを押したときにイキイキ顔診断画面に遷移するかのテスト 1`] = `
+Array [
+  <h1>
+    イキイキ顔診断画面
+  </h1>,
+  <div
+    className="username"
+  >
+    <p
+      id="ID"
+    >
+      ID:
+      testuser
+    </p>
+  </div>,
+  <div
+    className="return_to_function_select_area"
+  >
+    <button
+      id="clickreturn"
+      onClick={[Function]}
+      tabIndex={1}
+    >
+      機能選択画面に戻る
+    </button>
+  </div>,
+  <div
+    className="message_area"
+  >
+    <p
+      id="operationMsg"
+    >
+      ・画像選択ボタンを押してください
+    </p>
+  </div>,
+  <div
+    className="display"
+  >
+    <div
+      id="photo_area"
+      style={
+        Object {
+          "marginTop": 0,
+        }
+      }
+    >
+      
+    </div>
+  </div>,
+  <div
+    className="button_area"
+  >
+    <form
+      onSubmit={[Function]}
+    >
+      <input
+        accept=".png,.jpg,.jpeg"
+        className="hidden"
+        id="filename"
+        onChange={[Function]}
+        type="file"
+      />
+      <button
+        className="imageSelect"
+        onClick={[Function]}
+        tabIndex={2}
+        type="submit"
+      >
+        画像を選択
+      </button>
+    </form>
+    <button
+      className="diagnose_button"
+      disabled={true}
+      id="diagnose_button"
+      onClick={[Function]}
+      tabIndex={3}
+    >
+      診断する
+    </button>
+  </div>,
+  <div
+    className="diagnose_result_area"
+    id="diagnose_result_area"
+  >
+    <p
+      id="resist_day"
+    />
+    <p
+      id="result_msg"
+    />
+  </div>,
+]
+`;
+
+exports[`正常系、イキイキ顔診断ボタンを押したときにイキイキ顔診断画面に遷移するかのテスト 2`] = `
+Array [
+  <h1>
+    イキイキ顔診断画面
+  </h1>,
+  <div
+    className="username"
+  >
+    <p
+      id="ID"
+    >
+      ID:
+      testuser
+    </p>
+  </div>,
+  <div
+    className="return_to_function_select_area"
+  >
+    <button
+      id="clickreturn"
+      onClick={[Function]}
+      tabIndex={1}
+    >
+      機能選択画面に戻る
+    </button>
+  </div>,
+  <div
+    className="message_area"
+  >
+    <p
+      id="operationMsg"
+    >
+      ・画像選択ボタンを押してください
+    </p>
+  </div>,
+  <div
+    className="display"
+  >
+    <div
+      id="photo_area"
+      style={
+        Object {
+          "marginTop": 0,
+        }
+      }
+    >
+      
+    </div>
+  </div>,
+  <div
+    className="button_area"
+  >
+    <form
+      onSubmit={[Function]}
+    >
+      <input
+        accept=".png,.jpg,.jpeg"
+        className="hidden"
+        id="filename"
+        onChange={[Function]}
+        type="file"
+      />
+      <button
+        className="imageSelect"
+        onClick={[Function]}
+        tabIndex={2}
+        type="submit"
+      >
+        画像を選択
+      </button>
+    </form>
+    <button
+      className="diagnose_button"
+      disabled={true}
+      id="diagnose_button"
+      onClick={[Function]}
+      tabIndex={3}
+    >
+      診断する
+    </button>
+  </div>,
+  <div
+    className="diagnose_result_area"
+    id="diagnose_result_area"
+  >
+    <p
+      id="resist_day"
+    />
+    <p
+      id="result_msg"
+    />
+  </div>,
+]
+`;
+
+exports[`正常系、ログアウトボタンを押したときにログイン画面に遷移するかのテスト 1`] = `
+Array [
+  <h1>
+    イキイキ顔診断　ログイン画面
+  </h1>,
+  <div
+    className="main"
+    style={
+      Object {
+        "alignSelf": "center",
+      }
+    }
+  >
+    <form
+      onSubmit={[Function]}
+    >
+      ID
+      <br />
+      <input
+        className="box1"
+        id="ID"
+        onChange={[Function]}
+        pattern="^[0-9a-zA-Z]+$"
+        placeholder="ID"
+        required={true}
+        title="半角英数字のみ入力してください"
+        type="text"
+        value=""
+      />
+      <br />
+      パスワード
+      <br />
+      <input
+        className="box2"
+        id="password"
+        onChange={[Function]}
+        pattern="^[0-9a-zA-Z]+$"
+        placeholder="Password"
+        required={true}
+        title="半角英数字のみ入力してください"
+        type="password"
+        value=""
+      />
+      <br />
+      <button
+        disabled={false}
+        onClick={[Function]}
+        type="submit"
+      >
+        ログイン
+      </button>
+      <div
+        className="errMessage"
+        id="errMsg"
+      >
+        <p>
+          
+        </p>
+      </div>
+    </form>
+  </div>,
+]
+`;

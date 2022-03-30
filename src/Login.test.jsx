@@ -6,7 +6,6 @@ import React from "react";
 import renderer from "react-test-renderer";
 import { render } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
-import UserEvent from "@testing-library/user-event"
 import userEvent from "@testing-library/user-event";
 
 
@@ -48,8 +47,8 @@ it("正常系、ID,Passwordの入力に合わせてinputのonChangeメソッド�
     const inputID = document.getElementById("ID");
     const inputPassWord = document.getElementById("password");
 
-    UserEvent.type(inputID, VALID_ID);
-    UserEvent.type(inputPassWord, VALID_PASSWORD);
+    userEvent.type(inputID, VALID_ID);
+    userEvent.type(inputPassWord, VALID_PASSWORD);
     expect(inputID.value).toBe(VALID_ID);
     expect(inputPassWord.value).toBe(VALID_PASSWORD);
 });
@@ -76,8 +75,8 @@ it("正常系、ログイン認証失敗時にメッセージが反映されて�
     });
     const inputID = document.getElementById("ID");
     const inputPassWord = document.getElementById("password");
-    UserEvent.type(inputID, VALID_ID);
-    UserEvent.type(inputPassWord, VALID_PASSWORD);
+    userEvent.type(inputID, VALID_ID);
+    userEvent.type(inputPassWord, VALID_PASSWORD);
     const loginButton = document.querySelector("button[type='submit']");
     await act(async () => {
         userEvent.click(loginButton);
@@ -122,12 +121,12 @@ it("正常系、過去の診断結果が存在する状態でログイン認証�
     hasReadIkiikiResult={dummyResponseReadIkiikiResults.hasReadIkiikiResult}/>).toJSON();
     const inputID = document.getElementById("ID");
     const inputPassWord = document.getElementById("password");
-    UserEvent.type(inputID, VALID_ID);
-    UserEvent.type(inputPassWord, VALID_PASSWORD);
+    userEvent.type(inputID, VALID_ID);
+    userEvent.type(inputPassWord, VALID_PASSWORD);
 
     const loginButton = document.querySelector("button[type='submit']");
     await act(async () => {
-        UserEvent.click(loginButton);
+        userEvent.click(loginButton);
     });
     expect(tree).toMatchSnapshot();
 });
@@ -163,12 +162,12 @@ it("正常系、過去のデータが存在しない状態でログイン認証�
     hasReadIkiikiResult={dummyResponseReadIkiikiResults.hasReadIkiikiResult}/>).toJSON();
     const inputID = document.getElementById("ID");
     const inputPassWord = document.getElementById("password");
-    UserEvent.type(inputID, VALID_ID);
-    UserEvent.type(inputPassWord, VALID_PASSWORD);
+    userEvent.type(inputID, VALID_ID);
+    userEvent.type(inputPassWord, VALID_PASSWORD);
 
     const loginButton = document.querySelector("button[type='submit']");
     await act(async () => {
-        UserEvent.click(loginButton);
+        userEvent.click(loginButton);
     });
     expect(tree).toMatchSnapshot();
 });
@@ -190,8 +189,8 @@ it("異常系、API実行時レスポンスが空で返る場合", async () => {
     });
     const inputID = document.getElementById("ID");
     const inputPassWord = document.getElementById("password");
-    UserEvent.type(inputID, VALID_ID);
-    UserEvent.type(inputPassWord, VALID_PASSWORD);
+    userEvent.type(inputID, VALID_ID);
+    userEvent.type(inputPassWord, VALID_PASSWORD);
     const loginButton = document.querySelector("button[type='submit']");
     await act(async () => {
         userEvent.click(loginButton);
@@ -216,8 +215,8 @@ it("異常系、API実行時レスポンスがnullで返る場合", async () => 
     });
     const inputID = document.getElementById("ID");
     const inputPassWord = document.getElementById("password");
-    UserEvent.type(inputID, VALID_ID);
-    UserEvent.type(inputPassWord, VALID_PASSWORD);
+    userEvent.type(inputID, VALID_ID);
+    userEvent.type(inputPassWord, VALID_PASSWORD);
     const loginButton = document.querySelector("button[type='submit']");
     await act(async () => {
         userEvent.click(loginButton);
@@ -245,8 +244,8 @@ it("異常系、API実行時、ログイン認証に失敗しているがメッ�
     });
     const inputID = document.getElementById("ID");
     const inputPassWord = document.getElementById("password");
-    UserEvent.type(inputID, VALID_ID);
-    UserEvent.type(inputPassWord, VALID_PASSWORD);
+    userEvent.type(inputID, VALID_ID);
+    userEvent.type(inputPassWord, VALID_PASSWORD);
     const loginButton = document.querySelector("button[type='submit']");
     await act(async () => {
         userEvent.click(loginButton);
@@ -291,12 +290,12 @@ it("正常系、ログイン認証成功時に機能選択画面に遷移する�
     hasReadIkiikiResult={dummyResponseReadIkiikiResults.hasReadIkiikiResult}/>).toJSON();
     const inputID = document.getElementById("ID");
     const inputPassWord = document.getElementById("password");
-    UserEvent.type(inputID, VALID_ID);
-    UserEvent.type(inputPassWord, VALID_PASSWORD);
+    userEvent.type(inputID, VALID_ID);
+    userEvent.type(inputPassWord, VALID_PASSWORD);
 
     const loginButton = document.querySelector("button[type='submit']");
     await act(async () => {
-        UserEvent.click(loginButton);
+        userEvent.click(loginButton);
     });
     expect(tree).toMatchSnapshot();
 });
@@ -332,12 +331,12 @@ it("異常系、過去のデータ参照に失敗した状態でログイン認�
     hasReadIkiikiResult={dummyResponseReadIkiikiResults.hasReadIkiikiResult}/>).toJSON();
     const inputID = document.getElementById("ID");
     const inputPassWord = document.getElementById("password");
-    UserEvent.type(inputID, VALID_ID);
-    UserEvent.type(inputPassWord, VALID_PASSWORD);
+    userEvent.type(inputID, VALID_ID);
+    userEvent.type(inputPassWord, VALID_PASSWORD);
 
     const loginButton = document.querySelector("button[type='submit']");
     await act(async () => {
-        UserEvent.click(loginButton);
+        userEvent.click(loginButton);
     });
     expect(tree).toMatchSnapshot();
 });
