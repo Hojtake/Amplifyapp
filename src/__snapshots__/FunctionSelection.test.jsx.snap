@@ -73,7 +73,7 @@ Array [
     </form>
     <button
       className="diagnose_button"
-      disabled={true}
+      disabled={false}
       id="diagnose_button"
       onClick={[Function]}
       tabIndex={3}
@@ -168,7 +168,7 @@ Array [
     </form>
     <button
       className="diagnose_button"
-      disabled={true}
+      disabled={false}
       id="diagnose_button"
       onClick={[Function]}
       tabIndex={3}

@@ -128,6 +128,7 @@ it("正常系、機能選択画面に戻るボタンを押したときにFunctio
         ikiikiResults={ikiikiResults}
         hasReadIkiikiResult={true}/>
     )
+    expect(tree).toMatchSnapshot();
 });
 
 it("異常系、イキイキ顔診断が失敗した場合にメッセージが正しく表示されていることの確認", async () => {

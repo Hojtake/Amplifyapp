@@ -7,6 +7,7 @@ Array [
   </h1>,
   <p
     className="error_message"
+    id="error_message"
   />,
   <div
     className="username"
@@ -43,11 +44,15 @@ Array [
     <div
       className="table_area"
     >
-      <p>
+      <p
+        id="table_title"
+      >
         testuser
         さんの過去のイキイキ度の記録
       </p>
-      <p />
+      <p
+        id="nodata_message"
+      />
       <table
         border="2"
         width="650"
@@ -115,6 +120,7 @@ Array [
   </h1>,
   <p
     className="error_message"
+    id="error_message"
   />,
   <div
     className="username"
@@ -151,11 +157,15 @@ Array [
     <div
       className="table_area"
     >
-      <p>
+      <p
+        id="table_title"
+      >
         testuser
         さんの過去のイキイキ度の記録
       </p>
-      <p>
+      <p
+        id="nodata_message"
+      >
         まだイキイキ度が登録されていません。
       </p>
       <table
@@ -188,6 +198,7 @@ Array [
   </h1>,
   <p
     className="error_message"
+    id="error_message"
   />,
   <div
     className="username"
@@ -224,11 +235,15 @@ Array [
     <div
       className="table_area"
     >
-      <p>
+      <p
+        id="table_title"
+      >
         testuser
         さんの過去のイキイキ度の記録
       </p>
-      <p />
+      <p
+        id="nodata_message"
+      />
       <table
         border="2"
         width="650"
@@ -296,6 +311,7 @@ Array [
   </h1>,
   <p
     className="error_message"
+    id="error_message"
   >
     過去のデータの読み込みに失敗しました。
 過去の記録を閲覧したい場合は一度ログアウトして再度ログインしてください。
@@ -335,11 +351,15 @@ Array [
     <div
       className="table_area"
     >
-      <p>
+      <p
+        id="table_title"
+      >
         testuser
         さんの過去のイキイキ度の記録
       </p>
-      <p />
+      <p
+        id="nodata_message"
+      />
       <table
         border="2"
         width="650"
