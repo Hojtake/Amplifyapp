@@ -65,7 +65,7 @@ export default class APP extends React.Component{
         }else{
             return(
                 <>
-                エラーが発生しました再度読み込みを行ってください
+                エラーが発生しました。再度読み込みを行ってください
                 </>
             )
         }

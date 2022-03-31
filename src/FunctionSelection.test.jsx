@@ -15,7 +15,7 @@ const VALID_PASSWORD = "testpassword";
 it("正常系、過去の診断結果が存在する場合テーブルが作成されていることの確認", async () => {
     const dummyIkiikiResults=[
         {"diagnoseDate":"2022/01/01","ikiikiValue":70 },
-        {"diagnoseDate":"2022/01/02","ikiikiValue":50 },
+        {"diagnoseDate":"2022/01/02","ikiikiValue":30 },
         {"diagnoseDate":"2022/01/03","ikiikiValue":60 }
     ]
     render(

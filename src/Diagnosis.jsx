@@ -11,7 +11,7 @@ export default class Diagnosis extends React.Component {
         this.clickImageSelect = this.clickImageSelect.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClickImageSelect = this.handleClickImageSelect.bind(this);
-        this.state={resistDayMessage:null,resultMessage:null,operationMessage:"・画像選択ボタンを押してください",photoimage:"",marginTop:0,cursorWait:false, disabled:false,
+        this.state={resistDayMessage:null,resultMessage:null,operationMessage:"・画像選択ボタンを押してください",photoimage:"",marginTop:0,cursorWait:false, disabled:true,
             callback:this.props.callback,
             setIkiikiResults:this.props.setIkiikiResults
 
